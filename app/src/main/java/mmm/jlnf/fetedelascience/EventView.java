@@ -3,16 +3,16 @@ package mmm.jlnf.fetedelascience;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mmm.jlnf.fetedelascience.Database.DatabaseHandler;
+import mmm.jlnf.fetedelascience.Pojos.EventPojo;
 
 /**
  * Created by nicolas on 21/01/18.
@@ -34,9 +34,6 @@ public class EventView extends Activity{
         recyclerView.setLayoutManager(layoutManager);
 
         Intent i = getIntent();
-        /*Log.e("size", String.valueOf(recyclerViewAdapter.getItemCount()));
-        Log.e("taille", String.valueOf(eventsList.size()));
-        init();*/
         recyclerViewAdapter = new RecyclerViewAdapter(eventsList);
         recyclerView.setAdapter(recyclerViewAdapter);
         DatabaseHandler databaseHandler = new DatabaseHandler();

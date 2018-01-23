@@ -10,6 +10,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mmm.jlnf.fetedelascience.Pojos.EventPojo;
 
 /**
  * Created by nicolas on 21/01/18.

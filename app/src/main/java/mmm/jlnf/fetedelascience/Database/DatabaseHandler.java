@@ -1,51 +1,31 @@
-package mmm.jlnf.fetedelascience;
+package mmm.jlnf.fetedelascience.Database;
 
-import android.os.Debug;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Logger;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import mmm.jlnf.fetedelascience.Pojos.EventPojo;
+import mmm.jlnf.fetedelascience.RecyclerViewAdapter;
 
 /**
  * Created by nicolas on 20/01/18.
  */
 
-public class DatabaseHandler {
+public class DatabaseHandler implements IDatabaseHandler {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = database.getReference();
 
-    public void readValue(){
-        Log.d("TAG", databaseReference.getKey());
-    }
 
-    public void getEventDescription(){
-
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String s = (String) dataSnapshot.child("5553").child("fields").child("ville").getValue();
-                Log.e("Taaaaaaaag", s);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-
-    public List<EventPojo> getCityDescription(String city, List<EventPojo> eventPojos, RecyclerViewAdapter adapter){
+    @Override
+    public void getCityDescription(String city, List<EventPojo> eventPojos, RecyclerViewAdapter adapter){
     Log.e("test", "coucou");
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -64,8 +44,6 @@ public class DatabaseHandler {
                        EventPojo eventPojo = new EventPojo();
                        eventPojo.setTitle((String) issue.child("fields").child("titre_fr").getValue());
                        eventPojo.setDescription((String) issue.child("fields").child("description_fr").getValue());
-//                       eventPojo.setTitle("test1");
-//                       eventPojo.setDescription("test2");
                        eventPojos.add(eventPojo);
                        adapter.notifyItemInserted(eventPojos.size() -1);
 
@@ -80,7 +58,11 @@ public class DatabaseHandler {
             }
         });
 
-        return eventPojos;
+    }
+
+    @Override
+    public void getEventByCoordinates(LatLng coordinatesMin, LatLng coordinatesMax) {
+
     }
 
 }
