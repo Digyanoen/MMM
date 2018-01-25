@@ -34,8 +34,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         EventPojo eventPojo = pojoList.get(position);
-        holder.title.setText(eventPojo.getTitle());
-        holder.description.setText(eventPojo.getDescription());
+        holder.title.setText(eventPojo.getTitre_fr());
+        holder.description.setText(eventPojo.getDescription_fr());
 
     }
 
@@ -49,8 +49,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        @BindView(R.id.title) protected TextView title;
-        @BindView(R.id.description) protected TextView description;
+        @BindView(R.id.titre_fr) protected TextView title;
+        @BindView(R.id.description_fr) protected TextView description;
 
         public MyViewHolder(View itemView) {
             super(itemView);

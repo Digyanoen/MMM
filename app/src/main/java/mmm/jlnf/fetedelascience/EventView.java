@@ -45,8 +45,8 @@ public class EventView extends Activity{
 
     private void init() {
         EventPojo eventPojo = new EventPojo();
-        eventPojo.setDescription("desc");
-        eventPojo.setTitle("title");
+        eventPojo.setDescription_fr("desc");
+        eventPojo.setTitre_fr("title");
         for (int i=0; i<5; i++){
             eventsList.add(eventPojo);
         }
