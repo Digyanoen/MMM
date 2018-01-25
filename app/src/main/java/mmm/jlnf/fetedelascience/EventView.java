@@ -46,8 +46,6 @@ public class EventView extends Activity{
 
         recyclerViewAdapter.notifyDataSetChanged();
 
-//        DatabaseHandler databaseHandler = new DatabaseHandler();
-//        databaseHandler.getCityDescription(i.getStringExtra("ville"), eventsList, recyclerViewAdapter);
 
 
 
