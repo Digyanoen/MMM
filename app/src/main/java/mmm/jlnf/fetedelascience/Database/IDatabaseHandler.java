@@ -1,5 +1,7 @@
 package mmm.jlnf.fetedelascience.Database;
 
+import android.content.Context;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
@@ -12,6 +14,7 @@ import mmm.jlnf.fetedelascience.RecyclerViewAdapter;
  */
 
 interface IDatabaseHandler {
-    void getCityDescription(String city, List<EventPojo> eventPojos, RecyclerViewAdapter adapter);
-    void getEventByCoordinates(LatLng coordinatesMin, LatLng coordinatesMax);
+    List<EventPojo> getEventByCity(String city);
+    List<EventPojo> getEventByCoordinates(LatLng center, double rayon);
+    void initialize(Context context);
 }

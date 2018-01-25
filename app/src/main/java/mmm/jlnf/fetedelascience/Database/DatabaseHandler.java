@@ -20,6 +20,7 @@ import com.google.gson.stream.JsonReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import mmm.jlnf.fetedelascience.Pojos.EventPojo;
@@ -30,7 +31,7 @@ import mmm.jlnf.fetedelascience.RecyclerViewAdapter;
  * Created by nicolas on 20/01/18.
  */
 
-public class DatabaseHandler implements IDatabaseHandler {
+public class DatabaseHandler implements IDatabaseHandler{
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = database.getReference();
@@ -38,8 +39,9 @@ public class DatabaseHandler implements IDatabaseHandler {
 
 
     @Override
-    public void getCityDescription(String city, List<EventPojo> eventPojos, RecyclerViewAdapter adapter){
+    public List<EventPojo> getEventByCity(String city){
     Log.e("test", "coucou");
+    List<EventPojo> eventPojos = new ArrayList<>();
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -58,7 +60,6 @@ public class DatabaseHandler implements IDatabaseHandler {
                        eventPojo.setTitre_fr((String) issue.child("fields").child("titre_fr").getValue());
                        eventPojo.setDescription_fr((String) issue.child("fields").child("description_fr").getValue());
                        eventPojos.add(eventPojo);
-                       adapter.notifyItemInserted(eventPojos.size() -1);
 
                     }
                 }
@@ -71,12 +72,15 @@ public class DatabaseHandler implements IDatabaseHandler {
             }
         });
 
+        return eventPojos;
+
     }
 
     @Override
-    public void getEventByCoordinates(LatLng coordinatesMin, LatLng coordinatesMax) {
-
+    public List<EventPojo> getEventByCoordinates(LatLng center, double rayon) {
+        return null;
     }
+
 
     public void initialize(Context context){
         try {
@@ -98,6 +102,7 @@ public class DatabaseHandler implements IDatabaseHandler {
                 SQLdatabase.createEventPojo(eventPojo);
                 Log.e("Tag", "title : "+eventPojo.getTitre_fr());
                 Log.e("TAG", "desc : "+eventPojo.getDescription_fr());
+                Log.e("TAG", "city : "+eventPojo.getVille());
             }
             Log.e("tag", "finish");
 
