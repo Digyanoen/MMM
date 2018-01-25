@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mmm.jlnf.fetedelascience.Database.DBManager;
 import mmm.jlnf.fetedelascience.Database.DatabaseHandler;
 import mmm.jlnf.fetedelascience.Pojos.EventPojo;
 
@@ -30,14 +32,22 @@ public class EventView extends Activity{
         setContentView(R.layout.event_view);
         ButterKnife.bind(this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        DBManager dbmanager = DBManager.getInstance();
+        Intent i = getIntent();
+        recyclerViewAdapter = new RecyclerViewAdapter(eventsList);
 
         recyclerView.setLayoutManager(layoutManager);
 
-        Intent i = getIntent();
-        recyclerViewAdapter = new RecyclerViewAdapter(eventsList);
         recyclerView.setAdapter(recyclerViewAdapter);
-        DatabaseHandler databaseHandler = new DatabaseHandler();
-        databaseHandler.getCityDescription(i.getStringExtra("ville"), eventsList, recyclerViewAdapter);
+
+
+        eventsList.addAll(dbmanager.getPojosByCity(i.getStringExtra("ville")));
+        Log.e("tag", "size of eventlist : "+eventsList.size());
+
+        recyclerViewAdapter.notifyDataSetChanged();
+
+//        DatabaseHandler databaseHandler = new DatabaseHandler();
+//        databaseHandler.getCityDescription(i.getStringExtra("ville"), eventsList, recyclerViewAdapter);
 
 
 
