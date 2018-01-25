@@ -6,14 +6,23 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
 
 import mmm.jlnf.fetedelascience.Pojos.EventPojo;
+import mmm.jlnf.fetedelascience.R;
 
 /**
  * Created by nicolas on 23/01/18.
@@ -21,6 +30,7 @@ import mmm.jlnf.fetedelascience.Pojos.EventPojo;
 
 public class SQLDatabaseHelper extends OrmLiteSqliteOpenHelper {
 
+    private Context context;
     private Dao<EventPojo, String> eventDAO;
     private static String dbName = "events";
     private static int version = 1;
@@ -28,12 +38,14 @@ public class SQLDatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     public SQLDatabaseHelper(Context context) {
         super(context, dbName, null, version);
+        this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
             TableUtils.createTable(connectionSource, EventPojo.class);
+            initialize(context);
             Log.d("TAG", "Creation de la table");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -61,5 +73,34 @@ public class SQLDatabaseHelper extends OrmLiteSqliteOpenHelper {
             }
         }
         return eventDAO;
+    }
+
+    private void initialize(Context context){
+        try {
+
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            Gson gson = gsonBuilder.create();
+            InputStream resource = context.getResources().openRawResource(R.raw.data);
+            JsonReader jsonReader = new JsonReader(new InputStreamReader(resource));
+            JsonParser jsonParser = new JsonParser();
+            JsonArray jsonArray = jsonParser.parse(jsonReader).getAsJsonArray();
+            for (JsonElement element : jsonArray){
+
+                JsonObject object = element.getAsJsonObject().get("fields").getAsJsonObject();
+
+
+                EventPojo eventPojo = gson.fromJson(object, EventPojo.class);
+                DBManager.getInstance().createEventPojo(eventPojo);
+                Log.e("Tag", "title : "+eventPojo.getTitre_fr());
+                Log.e("TAG", "desc : "+eventPojo.getDescription_fr());
+                Log.e("TAG", "city : "+eventPojo.getVille());
+            }
+            Log.e("tag", "finish");
+
+            resource.close();
+            jsonReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

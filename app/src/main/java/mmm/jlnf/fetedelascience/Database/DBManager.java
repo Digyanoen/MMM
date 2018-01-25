@@ -1,6 +1,7 @@
 package mmm.jlnf.fetedelascience.Database;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 import mmm.jlnf.fetedelascience.Pojos.EventPojo;
+import mmm.jlnf.fetedelascience.RecyclerViewAdapter;
 
 /**
  * Created by nicolas on 24/01/18.
@@ -72,6 +74,16 @@ public class DBManager {
             e.printStackTrace();
             return -1;
         }
+    }
+
+    public List<EventPojo> getPojosByCity(String ville){
+        List<EventPojo> eventList = null;
+        try {
+            eventList = getHelper().getEventPojoDao().queryForEq("ville", ville);
+        } catch (SQLException e) {
+            eventList =  new ArrayList<>();
+        }
+        return eventList;
     }
 
 
