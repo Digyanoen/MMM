@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,6 +27,7 @@ public class EventView extends Activity{
     @BindView(R.id.event) RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
     private List<EventPojo> eventsList = new ArrayList<>();
+    @BindView(R.id.progress) ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,12 +42,18 @@ public class EventView extends Activity{
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(recyclerViewAdapter);
+        SearchAsyncHandler asyncHandler = new SearchAsyncHandler(progressBar);
+        asyncHandler.setListener(new SearchAsyncHandler.Listener() {
+            @Override
+            public void onFinished(List list) {
+                eventsList.addAll(list);
+                recyclerViewAdapter.notifyDataSetChanged();
+            }
+        });
 
-
-        eventsList.addAll(dbmanager.getPojosByCity(i.getStringExtra("ville")));
+        asyncHandler.execute(i.getStringExtra("ville"));
         Log.e("tag", "size of eventlist : "+eventsList.size());
 
-        recyclerViewAdapter.notifyDataSetChanged();
 
 
 

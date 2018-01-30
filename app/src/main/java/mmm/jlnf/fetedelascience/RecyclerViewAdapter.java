@@ -58,5 +58,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
+    public List<EventPojo> getPojoList() {
+        return pojoList;
+    }
 
+    public void setPojoList(List<EventPojo> pojoList) {
+        this.pojoList = pojoList;
+    }
 }
