@@ -35,8 +35,8 @@ public class DatabaseHandler implements IDatabaseHandler{
     }
 
     @Override
-    public List<EventPojo> getEventByCity(String city) {
-        return dbManager.getPojosByCity(city);
+    public List<EventPojo> getEventByCriteria(String type, String data) {
+        return dbManager.getPojosByCriteria(type, data);
     }
 
     @Override

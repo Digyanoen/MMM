@@ -3,6 +3,8 @@ package mmm.jlnf.fetedelascience;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -15,8 +17,10 @@ import butterknife.OnClick;
 
 public class SearchActivity extends Activity{
 
-    @BindView(R.id.Ville)
-    TextView textView;
+    @BindView(R.id.data) TextView textView;
+    @BindView(R.id.radioGroup)
+    RadioGroup radioGroup;
+
 
     @Override
     public void onCreate(Bundle onSavedInBundle) {
@@ -30,7 +34,10 @@ public class SearchActivity extends Activity{
     public void onClick(){
         Intent intent = new Intent(getApplicationContext(), EventView.class);
         String txt = textView.getText().toString();
-        intent.putExtra("ville", txt);
+        RadioButton selected =  (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
+        String type = selected.getText().toString();
+        intent.putExtra("type", type);
+        intent.putExtra("data", txt);
         startActivity(intent);
     }
 }

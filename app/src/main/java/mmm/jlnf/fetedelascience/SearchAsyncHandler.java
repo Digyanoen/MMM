@@ -32,7 +32,7 @@ public class SearchAsyncHandler extends AsyncTask<String, Integer, List<EventPoj
 
     @Override
     protected List<EventPojo> doInBackground(String... strings) {
-        return dbManager.getPojosByCity(strings[0]);
+        return dbManager.getPojosByCriteria(strings[0], strings[1]);
 
     }
 

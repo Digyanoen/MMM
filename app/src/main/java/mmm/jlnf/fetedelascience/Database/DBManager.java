@@ -3,6 +3,9 @@ package mmm.jlnf.fetedelascience.Database;
 import android.content.Context;
 import android.util.Log;
 
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -76,10 +79,17 @@ public class DBManager {
         }
     }
 
-    public List<EventPojo> getPojosByCity(String ville){
+    public List<EventPojo> getPojosByCriteria(String type, String data){
         List<EventPojo> eventList = null;
         try {
-            eventList = getHelper().getEventPojoDao().queryForEq("ville", ville);
+            if(type.equals("mots-clés")){
+                QueryBuilder<EventPojo, String> builder = getHelper().getEventPojoDao().queryBuilder();
+                 builder.where().like("mots_cles_fr", "%" + data + "%");
+                 eventList = getHelper().getEventPojoDao().query(builder.prepare());
+            }else {
+
+                eventList = getHelper().getEventPojoDao().queryForEq(type, data);
+            }
         } catch (SQLException e) {
             eventList =  new ArrayList<>();
         }

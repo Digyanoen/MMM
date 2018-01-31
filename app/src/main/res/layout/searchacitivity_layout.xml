@@ -3,16 +3,52 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/Ville"
+        android:id="@+id/data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/search"
+    <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/Ville"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="71dp" />
+        android:id="@+id/radioGroup">
+
+        <RadioButton
+            android:id="@+id/city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/data"
+            android:layout_marginTop="68dp"
+            android:layout_toStartOf="@+id/search"
+            android:text="ville" />
+
+        <RadioButton
+            android:id="@+id/keywords"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/city"
+            android:layout_below="@+id/city"
+            android:layout_marginTop="65dp"
+            android:text="mots-clés" />
+
+        <RadioButton
+            android:id="@+id/departement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/city"
+            android:layout_below="@+id/city"
+            android:layout_marginTop="65dp"
+            android:text="departement" />
+    </RadioGroup>
+
+    <Button
+    android:id="@+id/search"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginBottom="50dp" />
+
+
+
 
 </RelativeLayout>

@@ -22,6 +22,12 @@ public class EventPojo {
     @DatabaseField(columnName = "ville")
     private String ville;
 
+    @DatabaseField(columnName = "mots_cles_fr")
+    private String mots_cles_fr;
+
+    @DatabaseField(columnName = "departement")
+    private String departement;
+
 
     public String getDescription_fr() {
         return description_fr;
@@ -53,5 +59,21 @@ public class EventPojo {
 
     public void setVille(String ville) {
         this.ville = ville;
+    }
+
+    public String getMots_cles_fr() {
+        return mots_cles_fr;
+    }
+
+    public void setMots_cles_fr(String mots_cles_fr) {
+        this.mots_cles_fr = mots_cles_fr;
+    }
+
+    public String getDepartement() {
+        return departement;
+    }
+
+    public void setDepartement(String departement) {
+        this.departement = departement;
     }
 }

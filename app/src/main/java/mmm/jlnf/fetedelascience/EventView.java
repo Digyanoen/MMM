@@ -51,7 +51,7 @@ public class EventView extends Activity{
             }
         });
 
-        asyncHandler.execute(i.getStringExtra("ville"));
+        asyncHandler.execute(i.getStringExtra("type"), i.getStringExtra("data"));
         Log.e("tag", "size of eventlist : "+eventsList.size());
 
 
@@ -60,12 +60,4 @@ public class EventView extends Activity{
 
     }
 
-    private void init() {
-        EventPojo eventPojo = new EventPojo();
-        eventPojo.setDescription_fr("desc");
-        eventPojo.setTitre_fr("title");
-        for (int i=0; i<5; i++){
-            eventsList.add(eventPojo);
-        }
-    }
 }

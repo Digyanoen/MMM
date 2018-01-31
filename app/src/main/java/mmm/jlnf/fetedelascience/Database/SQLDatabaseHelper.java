@@ -92,6 +92,7 @@ public class SQLDatabaseHelper extends OrmLiteSqliteOpenHelper {
                 EventPojo eventPojo = gson.fromJson(object, EventPojo.class);
                 DBManager.getInstance().createEventPojo(eventPojo);
                 Log.e("Tag", "title : "+eventPojo.getTitre_fr());
+                Log.e("Tag", "key : "+eventPojo.getMots_cles_fr());
                 Log.e("TAG", "desc : "+eventPojo.getDescription_fr());
                 Log.e("TAG", "city : "+eventPojo.getVille());
             }

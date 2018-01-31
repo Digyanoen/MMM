@@ -14,6 +14,6 @@ import mmm.jlnf.fetedelascience.RecyclerViewAdapter;
  */
 
 public interface IDatabaseHandler {
-    List<EventPojo> getEventByCity(String city);
+    List<EventPojo> getEventByCriteria(String type, String data);
     List<EventPojo> getEventByCoordinates(LatLng center, double rayon);
 }
