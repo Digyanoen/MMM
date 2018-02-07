@@ -1,12 +1,17 @@
 package mmm.jlnf.fetedelascience;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,10 +23,12 @@ import mmm.jlnf.fetedelascience.Pojos.EventPojo;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
+    private Activity activity;
     private List<EventPojo> pojoList;
 
-    public RecyclerViewAdapter(List<EventPojo> pojoList) {
+    public RecyclerViewAdapter(List<EventPojo> pojoList, Activity activity) {
         this.pojoList = pojoList;
+        this.activity = activity;
     }
 
     @Override
@@ -36,6 +43,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         EventPojo eventPojo = pojoList.get(position);
         holder.title.setText(eventPojo.getTitre_fr());
         holder.description.setText(eventPojo.getDescription_fr());
+        holder.currentPojo = eventPojo;
+        holder.activity = activity;
 
     }
 
@@ -52,9 +61,37 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @BindView(R.id.titre_fr) protected TextView title;
         @BindView(R.id.description_fr) protected TextView description;
 
+        protected EventPojo currentPojo;
+        private Activity activity;
+
+
         public MyViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(activity.findViewById(R.id.eventlarge) == null){
+                        FragmentManager fragmentManager = activity.getFragmentManager();
+                        DescriptionFragment descriptionFragment = new DescriptionFragment();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.eventView, descriptionFragment)
+                                .addToBackStack(null)
+                                .commit();
+                        fragmentManager.executePendingTransactions();
+                        descriptionFragment.update(currentPojo);
+                        Log.e("tag", "toto");
+                    }
+                    else{
+                        DescriptionFragment descriptionFragment = (DescriptionFragment) activity.getFragmentManager().findFragmentById(R.id.eventlarge);
+                        descriptionFragment.update(currentPojo);
+
+                        Log.e("tag", "tata");
+                    }
+                }
+            });
         }
     }
 
@@ -64,5 +101,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public void setPojoList(List<EventPojo> pojoList) {
         this.pojoList = pojoList;
+    }
+
+    private Activity getActivity(){
+        return activity;
     }
 }

@@ -1,6 +1,8 @@
 package mmm.jlnf.fetedelascience;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,7 +39,18 @@ public class EventView extends Activity{
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         DBManager dbmanager = DBManager.getInstance();
         Intent i = getIntent();
-        recyclerViewAdapter = new RecyclerViewAdapter(eventsList);
+
+
+        if(findViewById(R.id.eventlarge) != null){
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.eventlarge, new DescriptionFragment());
+            fragmentTransaction.commit();
+        }
+
+
+
+        recyclerViewAdapter = new RecyclerViewAdapter(eventsList, this);
 
         recyclerView.setLayoutManager(layoutManager);
 
@@ -52,7 +65,6 @@ public class EventView extends Activity{
         });
 
         asyncHandler.execute(i.getStringExtra("type"), i.getStringExtra("data"));
-        Log.e("tag", "size of eventlist : "+eventsList.size());
 
 
 
