@@ -19,7 +19,8 @@
             android:layout_below="@+id/data"
             android:layout_marginTop="68dp"
             android:layout_toStartOf="@+id/search"
-            android:text="ville" />
+            android:text="ville"
+            android:checked="true"/>
 
         <RadioButton
             android:id="@+id/keywords"
