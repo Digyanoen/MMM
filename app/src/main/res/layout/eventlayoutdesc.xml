@@ -18,5 +18,16 @@
         android:layout_height="wrap_content"
         android:id="@+id/descriptionEvent"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dateEvent"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addToCalendar"
+        android:text="Ajouter au calendrier"/>
+
 
 </LinearLayout>

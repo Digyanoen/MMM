@@ -27,6 +27,11 @@ public class EventPojo {
 
     @DatabaseField(columnName = "departement")
     private String departement;
+    @DatabaseField(columnName = "identifiant")
+    private String identifiant;
+
+    @DatabaseField(columnName = "dates")
+    private String dates;
 
 
     public String getDescription_fr() {
@@ -75,5 +80,21 @@ public class EventPojo {
 
     public void setDepartement(String departement) {
         this.departement = departement;
+    }
+
+    public String getIdentifiant() {
+        return identifiant;
+    }
+
+    public void setIdentifiant(String identifiant) {
+        this.identifiant = identifiant;
+    }
+
+    public String getDates() {
+        return dates;
+    }
+
+    public void setDates(String dates) {
+        this.dates = dates;
     }
 }
