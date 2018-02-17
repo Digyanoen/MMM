@@ -80,31 +80,26 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             ButterKnife.bind(this, itemView);
 
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    if(activity.findViewById(R.id.eventlarge) == null){
-                        FragmentManager fragmentManager = activity.getFragmentManager();
-                        DescriptionFragment descriptionFragment = new DescriptionFragment();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.eventlarge, descriptionFragment)
-                                .addToBackStack(null)
-                                .commit();
-                        fragmentManager.executePendingTransactions();
-                        descriptionFragment.update(currentPojo);
-                        Log.e("tag", "toto");
- /*                   }
-                    else{
-                        DescriptionFragment descriptionFragment = (DescriptionFragment) activity.getFragmentManager().findFragmentById(R.id.eventlarge);
-                        descriptionFragment.update(currentPojo);
+            itemView.setOnClickListener(v -> {
+                    FragmentManager fragmentManager = activity.getFragmentManager();
+                    DescriptionFragment descriptionFragment = new DescriptionFragment();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.eventlarge, descriptionFragment)
+                            .addToBackStack(null)
+                            .commit();
+                    fragmentManager.executePendingTransactions();
+                    descriptionFragment.update(currentPojo);
+/*                   }
+                else{
+                    DescriptionFragment descriptionFragment = (DescriptionFragment) activity.getFragmentManager().findFragmentById(R.id.eventlarge);
+                    descriptionFragment.update(currentPojo);
 
-                        Log.e("tag", "tata");
-                    }
+                    Log.e("tag", "tata");
+                }
 */
 
 
 
-                }
             });
         }
 
@@ -124,6 +119,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private Activity getActivity(){
         return activity;
     }
+
 
 
 }

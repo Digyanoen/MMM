@@ -38,6 +38,7 @@ public class EventView extends Activity{
         DBManager dbmanager = DBManager.getInstance();
         Intent i = getIntent();
 
+        NotationRecyclerFragment notationRecyclerFragment = new NotationRecyclerFragment();
         RecyclerFragment recycler = new RecyclerFragment();
 
         FragmentManager fragmentManager = getFragmentManager();
@@ -47,12 +48,9 @@ public class EventView extends Activity{
 
         SearchAsyncHandler asyncHandler = new SearchAsyncHandler(progressBar);
 
-        asyncHandler.setListener(new SearchAsyncHandler.Listener() {
-            @Override
-            public void onFinished(List list) {
-                recycler.updateEventsList(list);
-                recycler.getAdapter().notifyDataSetChanged();
-            }
+        asyncHandler.setListener(list -> {
+            recycler.updateEventsList(list);
+            recycler.getAdapter().notifyDataSetChanged();
         });
 
         asyncHandler.execute(i.getStringExtra("type"), i.getStringExtra("data"));

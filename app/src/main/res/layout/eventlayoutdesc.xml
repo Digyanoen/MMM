@@ -29,5 +29,25 @@
         android:id="@+id/addToCalendar"
         android:text="Ajouter au calendrier"/>
 
+    <FrameLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:id="@+id/avis">
+    </FrameLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/notate"
+        android:text="Noter l'événement"/>
+
+  <!--  <android.support.v7.widget.RecyclerView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/avis">
+    </android.support.v7.widget.RecyclerView>-->
+
 
 </LinearLayout>

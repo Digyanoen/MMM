@@ -48,9 +48,9 @@ public class NotationActivity extends Activity {
 
     @OnClick(R.id.evaluate)
     public void onTouch(){
-
-        firebaseDatabase.child("pouet").child(name.getText() +" "+firstname.getText()).child("comment").setValue(comment.getText().toString());
-        firebaseDatabase.child("pouet").child(name.getText() +" "+firstname.getText()).child("stars").setValue(ratingBar.getRating());
+        String i = getIntent().getStringExtra("identifiant");
+        firebaseDatabase.child(i).child(name.getText() +" "+firstname.getText()).child("comment").setValue(comment.getText().toString());
+        firebaseDatabase.child(i).child(name.getText() +" "+firstname.getText()).child("stars").setValue(ratingBar.getRating());
         firebaseDatabase.push();
 
     }

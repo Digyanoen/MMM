@@ -3,7 +3,10 @@ package mmm.jlnf.fetedelascience;
 import android.*;
 import android.Manifest;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,8 +46,10 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
     TextView date;
 
     private EventPojo eventPojo;
+    private NotationRecyclerFragment notationRecyclerFragment;
 
     public DescriptionFragment() {
+        super();
     }
 
     @Override
@@ -53,6 +58,11 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.eventlayoutdesc, container, false);
         ButterKnife.bind(this, view);
+        FragmentManager fragmentManager = getFragmentManager();
+        notationRecyclerFragment = new NotationRecyclerFragment();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.avis, notationRecyclerFragment);
+        fragmentTransaction.commit();
 
         return view;
     }
@@ -64,6 +74,7 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
         ville.setText(currentPojo.getVille());
         date.setText(currentPojo.getDates().replace(';', '\n'));
         this.eventPojo = currentPojo;
+        notationRecyclerFragment.getNotationRecyclerAdapter().getCommentForEvent(currentPojo.getIdentifiant());
 
     }
 
@@ -99,6 +110,13 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
         ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.WRITE_CALENDAR}, 0);
     }
 }
+
+    @OnClick(R.id.notate)
+    public void notate(){
+        Intent i = new Intent(getActivity(), NotationActivity.class);
+        i.putExtra("identifiant", eventPojo.getIdentifiant());
+        startActivity(i);
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
