@@ -75,7 +75,7 @@ public class NotationRecyclerAdapter extends RecyclerView.Adapter<NotationRecycl
                         comment = (Map) entry.getValue();
                         commentEvent.setComment((String) comment.get("comment"));
                         commentEvent.setName((String) entry.getKey());
-                        commentEvent.setStars((Long) comment.get("stars"));
+                        commentEvent.setStars((String) comment.get("stars"));
                         commentEventList.add(commentEvent);
                         notifyItemInserted(commentEventList.size() - 1);
 

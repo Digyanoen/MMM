@@ -50,7 +50,7 @@ public class NotationActivity extends Activity {
     public void onTouch(){
         String i = getIntent().getStringExtra("identifiant");
         firebaseDatabase.child(i).child(name.getText() +" "+firstname.getText()).child("comment").setValue(comment.getText().toString());
-        firebaseDatabase.child(i).child(name.getText() +" "+firstname.getText()).child("stars").setValue(ratingBar.getRating());
+        firebaseDatabase.child(i).child(name.getText() +" "+firstname.getText()).child("stars").setValue(String.valueOf(ratingBar.getRating()));
         firebaseDatabase.push();
 
     }

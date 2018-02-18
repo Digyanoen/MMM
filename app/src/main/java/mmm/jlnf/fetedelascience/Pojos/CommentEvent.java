@@ -7,7 +7,7 @@ package mmm.jlnf.fetedelascience.Pojos;
 public class CommentEvent {
     private String name;
     private String comment;
-    private float stars;
+    private String stars;
 
     public String getName() {
         return name;
@@ -25,11 +25,11 @@ public class CommentEvent {
         this.comment = comment;
     }
 
-    public float getStars() {
+    public String getStars() {
         return stars;
     }
 
-    public void setStars(float stars) {
+    public void setStars(String stars) {
         this.stars = stars;
     }
 }
