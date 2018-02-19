@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -52,6 +53,8 @@ public class NotationActivity extends Activity {
         firebaseDatabase.child(i).child(name.getText() +" "+firstname.getText()).child("comment").setValue(comment.getText().toString());
         firebaseDatabase.child(i).child(name.getText() +" "+firstname.getText()).child("stars").setValue(String.valueOf(ratingBar.getRating()));
         firebaseDatabase.push();
+        Toast.makeText(getApplicationContext(), "Événement noté", Toast.LENGTH_SHORT).show();
+        finish();
 
     }
 }
