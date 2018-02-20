@@ -20,6 +20,7 @@ import mmm.jlnf.fetedelascience.Database.*;
 import mmm.jlnf.fetedelascience.Pojos.EventPojo;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+    public static boolean isOrganisteur = false;
 
     private GoogleMap mMap;
     private int height;

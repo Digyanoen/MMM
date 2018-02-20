@@ -83,12 +83,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             itemView.setOnClickListener(v -> {
                     FragmentManager fragmentManager = activity.getFragmentManager();
                     DescriptionFragment descriptionFragment = new DescriptionFragment();
+                    descriptionFragment.setEventPojo(currentPojo);
                     fragmentManager.beginTransaction()
                             .replace(R.id.eventlarge, descriptionFragment)
                             .addToBackStack(null)
                             .commit();
                     fragmentManager.executePendingTransactions();
-                    descriptionFragment.update(currentPojo);
+                    descriptionFragment.update();
 /*                   }
                 else{
                     DescriptionFragment descriptionFragment = (DescriptionFragment) activity.getFragmentManager().findFragmentById(R.id.eventlarge);

@@ -70,16 +70,18 @@ public class NotationRecyclerAdapter extends RecyclerView.Adapter<NotationRecycl
                 Map<String,Object> mapNotation = (Map<String,Object>) dataSnapshot.getValue();
                 if(mapNotation != null) {
                     for (Map.Entry<String, Object> entry : mapNotation.entrySet()) {
-                        CommentEvent commentEvent = new CommentEvent();
-                        Map<String, Object> comment = new HashMap();
-                        comment = (Map) entry.getValue();
-                        commentEvent.setComment((String) comment.get("comment"));
-                        commentEvent.setName((String) entry.getKey());
-                        commentEvent.setStars((String) comment.get("stars"));
-                        commentEventList.add(commentEvent);
-                        notifyItemInserted(commentEventList.size() - 1);
+                        if (!entry.getKey().equals("Remplissage")) {
+                            CommentEvent commentEvent = new CommentEvent();
+                            Map<String, Object> comment = new HashMap();
+                            comment = (Map) entry.getValue();
+                            commentEvent.setComment((String) comment.get("comment"));
+                            commentEvent.setName((String) entry.getKey());
+                            commentEvent.setStars((String) comment.get("stars"));
+                            commentEventList.add(commentEvent);
+                            notifyItemInserted(commentEventList.size() - 1);
 
 
+                        }
                     }
                 }
             }

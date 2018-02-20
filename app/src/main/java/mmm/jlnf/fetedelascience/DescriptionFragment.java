@@ -1,6 +1,5 @@
 package mmm.jlnf.fetedelascience;
 
-import android.*;
 import android.Manifest;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -17,12 +16,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Arrays;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 import butterknife.BindView;
@@ -30,11 +40,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mmm.jlnf.fetedelascience.Pojos.EventPojo;
 
+import static android.R.layout.*;
+
 /**
  * Created by nicolas on 06/02/18.
  */
 
-public class DescriptionFragment extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class DescriptionFragment extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback{
 
     @BindView(R.id.titleEvent)
     TextView title;
@@ -44,9 +56,15 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
     TextView ville;
     @BindView(R.id.dateEvent)
     TextView date;
+    @BindView(R.id.remplissage)
+    FrameLayout frameLayout;
+    private Spinner spinner;
+    private TextView textView;
 
     private EventPojo eventPojo;
     private NotationRecyclerFragment notationRecyclerFragment;
+    private DatabaseReference databaseReference;
+    private List<Integer> remplissage;
 
     public DescriptionFragment() {
         super();
@@ -63,20 +81,87 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.avis, notationRecyclerFragment);
         fragmentTransaction.commit();
+        textView = new TextView(getActivity());
+        spinner = new Spinner(getActivity());
+
+
+
+            databaseReference = FirebaseDatabase.getInstance().getReference();
+
+
+            databaseReference.child(eventPojo.getIdentifiant()).child("Remplissage").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Long value = (Long) dataSnapshot.getValue();
+                    if(MapsActivity.isOrganisteur) {
+                        frameLayout.addView(spinner);
+                        remplissage = new ArrayList<Integer>();
+                        for (int i = 0; i <= 10; i++) remplissage.add(i * 10);
+
+                        // Creating adapter for spinner
+                        ArrayAdapter<Integer> dataAdapter = new ArrayAdapter<Integer>(getActivity(), simple_spinner_item, remplissage);
+
+                        // Drop down layout style - list view with radio button
+                        dataAdapter.setDropDownViewResource(simple_spinner_dropdown_item);
+
+                        // attaching data adapter to spinner
+                        spinner.setAdapter(dataAdapter);
+                        if (value != null) {
+                            spinner.setSelection(remplissage.indexOf(value.intValue()));
+                            Log.e("tete", "pouetpouet");
+                            Log.e("erre", value.toString());
+
+                        }
+                    }
+                    else {
+                        frameLayout.addView(textView);
+                        if(value != null){
+                            textView.setText(value.toString());
+                        }else {
+                            textView.setText("0");
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        if(MapsActivity.isOrganisteur) spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    int remplissage = (int) parent.getItemAtPosition(position);
+                    databaseReference.child(eventPojo.getIdentifiant()).child("Remplissage").setValue(remplissage);
+                    databaseReference.push();
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
 
         return view;
     }
 
 
-    public void update(EventPojo currentPojo) {
-        title.setText(currentPojo.getTitre_fr());
-        desc.setText(currentPojo.getDescription_fr());
-        ville.setText(currentPojo.getVille());
-        date.setText(currentPojo.getDates().replace(';', '\n'));
-        this.eventPojo = currentPojo;
-        notationRecyclerFragment.getNotationRecyclerAdapter().getCommentForEvent(currentPojo.getIdentifiant());
+    public void update() {
+        title.setText(eventPojo.getTitre_fr());
+        desc.setText(eventPojo.getDescription_fr());
+        ville.setText(eventPojo.getVille());
+        date.setText(eventPojo.getDates().replace(';', '\n'));
+//        this.eventPojo = currentPojo;
+        notationRecyclerFragment.getNotationRecyclerAdapter().getCommentForEvent(eventPojo.getIdentifiant());
 
-    }
+
+
+        }
+
+
 
     @OnClick(R.id.addToCalendar)
     public void addToCalendar(){
@@ -150,5 +235,9 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
             }
 
         }
+    }
+
+    public void setEventPojo(EventPojo eventPojo) {
+        this.eventPojo = eventPojo;
     }
 }
