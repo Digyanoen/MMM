@@ -15,6 +15,7 @@ import static android.content.ContentValues.TAG;
 
 /**
  * Created by nicolas on 30/01/18.
+ * Recherche asynchrone dans la base de données
  */
 
 public class SearchAsyncHandler extends AsyncTask<String, Integer, List<EventPojo>> {
@@ -35,7 +36,6 @@ public class SearchAsyncHandler extends AsyncTask<String, Integer, List<EventPoj
     @Override
     protected List<EventPojo> doInBackground(String... strings) {
         List<EventPojo> pojosByCriteria = dbManager.getPojosByCriteria(strings[0], strings[1]);
-        Log.e(TAG, "doInBackground: "+strings[0] + " " + strings[1]);
         return pojosByCriteria;
 
     }

@@ -44,6 +44,7 @@ import static android.R.layout.*;
 
 /**
  * Created by nicolas on 06/02/18.
+ * Fragment de description d'un evenement
  */
 
 public class DescriptionFragment extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback{
@@ -129,6 +130,7 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
                 }
             });
 
+            // Si l'utilisateur est l'oganisateur, on rajoute un listener sur le spinner
         if(MapsActivity.isOrganisteur) spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -162,7 +164,10 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
         }
 
 
-
+    /**
+     * Ajout au calendrier
+     * Vérification si la permission d'ajout au calendrier est accordée
+     */
     @OnClick(R.id.addToCalendar)
     public void addToCalendar(){
     if(ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.WRITE_CALENDAR)==PackageManager.PERMISSION_GRANTED)
@@ -192,7 +197,7 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
     } else
 
     {
-        ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.WRITE_CALENDAR}, 0);
+        requestPermissions(new String[]{Manifest.permission.WRITE_CALENDAR}, 0);
     }
 }
 
@@ -203,37 +208,20 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
         startActivity(i);
     }
 
+    /**
+     * Résultat de la demande de permission
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == 0) {
-            if (ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
-
-                ContentValues values = new ContentValues();
-                Calendar beginTime = Calendar.getInstance();
-                String[] dates = eventPojo.getDates().split(";");
-                for( String date : dates) {
-                    String[] splitDate = date.split("-");
-                    beginTime.set(Integer.parseInt(splitDate[0]), Integer.parseInt(splitDate[1])-1, Integer.parseInt(splitDate[2]));
-                    Calendar endTime = Calendar.getInstance();
-                    long start = beginTime.getTimeInMillis();
-                    endTime.set(Integer.parseInt(splitDate[0]), Integer.parseInt(splitDate[1])-1, Integer.parseInt(splitDate[2])+1);
-                    long end = endTime.getTimeInMillis();
-                    Log.e("tag", "begin "+start+" end "+end);
-                    values.put(CalendarContract.Events.DTSTART, start);
-                    values.put(CalendarContract.Events.DTEND, end);
-                    values.put(CalendarContract.Events.TITLE, eventPojo.getTitre_fr());
-                    values.put(CalendarContract.Events.DESCRIPTION, eventPojo.getDescription_fr());
-                    values.put(CalendarContract.Events.ALL_DAY, 1);
-                    values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
-                    values.put(CalendarContract.Events.CALENDAR_ID, 3);
-                    Uri uri = this.getActivity().getContentResolver().insert(CalendarContract.Events.CONTENT_URI, values);
-                }
-                Toast.makeText(this.getActivity(), "Evénement ajouté", Toast.LENGTH_SHORT).show();
-
+        Log.e("request code", String.valueOf(requestCode));
+        if (requestCode == 0 && (ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.WRITE_CALENDAR)==PackageManager.PERMISSION_GRANTED)) {
+                Log.e("tata", "toto");
+                addToCalendar();
             }else {
                 Toast.makeText(this.getActivity(), "Vous avez refusé l'autorisation", Toast.LENGTH_SHORT).show();
-            }
-
         }
     }
 

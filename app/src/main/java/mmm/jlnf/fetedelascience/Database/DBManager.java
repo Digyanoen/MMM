@@ -16,6 +16,7 @@ import mmm.jlnf.fetedelascience.RecyclerViewAdapter;
 
 /**
  * Created by nicolas on 24/01/18.
+ * DAO Permettant la récupération dans la base SQL
  */
 
 public class DBManager {
@@ -79,6 +80,12 @@ public class DBManager {
         }
     }
 
+    /**
+     * Recher de pojos selon un type
+     * @param type le type de la recherche
+     * @param data le champ entré
+     * @return
+     */
     public List<EventPojo> getPojosByCriteria(String type, String data){
         List<EventPojo> eventList = null;
         try {

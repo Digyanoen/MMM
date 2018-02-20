@@ -74,7 +74,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         protected EventPojo currentPojo;
         private Activity activity;
 
-
+        /**
+         * Lors d'un clic sur un événement, chargemenet d'une description détaillée de celui-ci
+         */
         public MyViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -90,14 +92,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                             .commit();
                     fragmentManager.executePendingTransactions();
                     descriptionFragment.update();
-/*                   }
-                else{
-                    DescriptionFragment descriptionFragment = (DescriptionFragment) activity.getFragmentManager().findFragmentById(R.id.eventlarge);
-                    descriptionFragment.update(currentPojo);
-
-                    Log.e("tag", "tata");
-                }
-*/
 
 
 

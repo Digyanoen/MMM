@@ -62,6 +62,10 @@ public class NotationRecyclerAdapter extends RecyclerView.Adapter<NotationRecycl
         return commentEventList.size();
     }
 
+    /**
+     * Récupération des différents avis pour un événement
+     * @param identifiant l'identifiant de l'événément
+     */
     public void getCommentForEvent(String identifiant) {
         DatabaseReference databaseReference=  FirebaseDatabase.getInstance().getReference().child(identifiant);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {

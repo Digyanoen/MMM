@@ -75,6 +75,10 @@ public class SQLDatabaseHelper extends OrmLiteSqliteOpenHelper {
         return eventDAO;
     }
 
+    /**
+     * Initialisation de la BDD
+     * @param context
+     */
     private void initialize(Context context){
         try {
 
@@ -91,13 +95,7 @@ public class SQLDatabaseHelper extends OrmLiteSqliteOpenHelper {
 
                 EventPojo eventPojo = gson.fromJson(object, EventPojo.class);
                 DBManager.getInstance().createEventPojo(eventPojo);
-                /*Log.e("Tag", "title : "+eventPojo.getTitre_fr());
-                Log.e("Tag", "key : "+eventPojo.getMots_cles_fr());
-                Log.e("TAG", "desc : "+eventPojo.getDescription_fr());
-                Log.e("TAG", "city : "+eventPojo.getVille());*/
-                Log.e("TAG", "id : "+eventPojo.getIdentifiant());
             }
-            Log.e("tag", "finish");
 
             resource.close();
             jsonReader.close();
