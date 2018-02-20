@@ -1,4 +1,4 @@
-package mmm.jlnf.fetedelascience.Pojos;
+package mmm.jlnf.fetedelascience.pojos;
 
 import java.util.HashMap;
 import java.util.Map;

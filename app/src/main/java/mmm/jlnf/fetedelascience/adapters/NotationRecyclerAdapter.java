@@ -1,30 +1,26 @@
-package mmm.jlnf.fetedelascience;
+package mmm.jlnf.fetedelascience.adapters;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mmm.jlnf.fetedelascience.Pojos.CommentEvent;
-import mmm.jlnf.fetedelascience.Pojos.EventPojo;
-import mmm.jlnf.fetedelascience.Pojos.NotationPojo;
+import mmm.jlnf.fetedelascience.R;
+import mmm.jlnf.fetedelascience.pojos.CommentEvent;
 
 /**
  * Created by nicolas on 21/01/18.

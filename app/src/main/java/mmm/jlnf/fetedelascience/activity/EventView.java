@@ -1,26 +1,19 @@
-package mmm.jlnf.fetedelascience;
+package mmm.jlnf.fetedelascience.activity;
 
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.ProgressBar;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mmm.jlnf.fetedelascience.Database.DBManager;
-import mmm.jlnf.fetedelascience.Database.DatabaseHandler;
-import mmm.jlnf.fetedelascience.Pojos.EventPojo;
-
-import static android.content.ContentValues.TAG;
+import mmm.jlnf.fetedelascience.R;
+import mmm.jlnf.fetedelascience.SearchAsyncHandler;
+import mmm.jlnf.fetedelascience.database.DBManager;
+import mmm.jlnf.fetedelascience.fragments.NotationRecyclerFragment;
+import mmm.jlnf.fetedelascience.fragments.RecyclerFragment;
 
 /**
  * Created by nicolas on 21/01/18.

@@ -1,6 +1,5 @@
 package mmm.jlnf.fetedelascience;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -8,8 +7,8 @@ import android.widget.ProgressBar;
 
 import java.util.List;
 
-import mmm.jlnf.fetedelascience.Database.DBManager;
-import mmm.jlnf.fetedelascience.Pojos.EventPojo;
+import mmm.jlnf.fetedelascience.database.DBManager;
+import mmm.jlnf.fetedelascience.pojos.EventPojo;
 
 import static android.content.ContentValues.TAG;
 
@@ -50,7 +49,6 @@ public class SearchAsyncHandler extends AsyncTask<String, Integer, List<EventPoj
     protected void onPostExecute(List<EventPojo> result){
         super.onPostExecute(result);
         progressBar.setVisibility(View.GONE);
-        Log.e(TAG, "onPostExecute: " + result.size());
         listener.onFinished(result);
 
     }

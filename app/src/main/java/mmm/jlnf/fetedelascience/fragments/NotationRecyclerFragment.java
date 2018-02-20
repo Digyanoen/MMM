@@ -1,11 +1,10 @@
-package mmm.jlnf.fetedelascience;
+package mmm.jlnf.fetedelascience.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +14,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mmm.jlnf.fetedelascience.Pojos.CommentEvent;
-import mmm.jlnf.fetedelascience.Pojos.NotationPojo;
-
-import static android.content.ContentValues.TAG;
+import mmm.jlnf.fetedelascience.adapters.NotationRecyclerAdapter;
+import mmm.jlnf.fetedelascience.pojos.CommentEvent;
+import mmm.jlnf.fetedelascience.R;
 
 /**
  * Created by nicolas on 17/02/18.

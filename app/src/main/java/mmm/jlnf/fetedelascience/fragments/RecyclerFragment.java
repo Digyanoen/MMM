@@ -1,9 +1,6 @@
-package mmm.jlnf.fetedelascience;
+package mmm.jlnf.fetedelascience.fragments;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,16 +9,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ProgressBar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import mmm.jlnf.fetedelascience.Database.DBManager;
-import mmm.jlnf.fetedelascience.Pojos.EventPojo;
+import mmm.jlnf.fetedelascience.pojos.EventPojo;
+import mmm.jlnf.fetedelascience.R;
+import mmm.jlnf.fetedelascience.adapters.RecyclerViewAdapter;
 
 import static android.content.ContentValues.TAG;
 
@@ -31,11 +28,10 @@ import static android.content.ContentValues.TAG;
 
 public class RecyclerFragment extends Fragment {
 
-
-
     @BindView(R.id.event) RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
     private List<EventPojo> eventsList = new ArrayList<>();
+    private RecyclerListener listener;
 
     public RecyclerFragment() {
         super();
@@ -69,6 +65,14 @@ public class RecyclerFragment extends Fragment {
 
     public void updateEventsList(List list) {
         eventsList.addAll(list);
+    }
+
+    public void setOnRecyclerListener(RecyclerListener recyclerListener){
+        listener = recyclerListener;
+    }
+
+    interface RecyclerListener{
+        void onRecyclerListener(HashMap<String, String> m);
     }
 
 }

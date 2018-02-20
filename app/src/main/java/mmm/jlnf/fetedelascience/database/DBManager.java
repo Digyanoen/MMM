@@ -1,18 +1,16 @@
-package mmm.jlnf.fetedelascience.Database;
+package mmm.jlnf.fetedelascience.database;
 
 import android.content.Context;
-import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.j256.ormlite.stmt.QueryBuilder;
-import com.j256.ormlite.stmt.Where;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import mmm.jlnf.fetedelascience.Pojos.EventPojo;
-import mmm.jlnf.fetedelascience.RecyclerViewAdapter;
+import mmm.jlnf.fetedelascience.pojos.EventPojo;
 
 /**
  * Created by nicolas on 24/01/18.
@@ -91,8 +89,8 @@ public class DBManager {
         try {
             if(type.equals("mots-clés")){
                 QueryBuilder<EventPojo, String> builder = getHelper().getEventPojoDao().queryBuilder();
-                 builder.where().like("mots_cles_fr", "%" + data + "%");
-                 eventList = getHelper().getEventPojoDao().query(builder.prepare());
+                builder.where().like("mots_cles_fr", "%" + data + "%");
+                eventList = getHelper().getEventPojoDao().query(builder.prepare());
             }else {
 
                 eventList = getHelper().getEventPojoDao().queryForEq(type, data);
@@ -102,6 +100,22 @@ public class DBManager {
         }
         return eventList;
     }
+
+    public List<EventPojo> getPojosByCoordinate(LatLng center, double rayon){
+        List<EventPojo> eventList = null;
+        try {
+            QueryBuilder<EventPojo, String> builder = getHelper().getEventPojoDao().queryBuilder();
+            builder.where().le("lat", center.latitude+rayon)
+                    .and().ge("lat", center.latitude-rayon)
+                    .and().le("lng", center.longitude+rayon)
+                    .and().ge("lng", center.longitude-rayon);
+            eventList = getHelper().getEventPojoDao().query(builder.prepare());
+        } catch (SQLException e) {
+            eventList =  new ArrayList<>();
+        }
+        return eventList;
+    }
+
 
 
 }

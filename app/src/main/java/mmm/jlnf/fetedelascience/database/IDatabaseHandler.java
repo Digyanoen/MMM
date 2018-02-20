@@ -1,13 +1,10 @@
-package mmm.jlnf.fetedelascience.Database;
-
-import android.content.Context;
+package mmm.jlnf.fetedelascience.database;
 
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
-import mmm.jlnf.fetedelascience.Pojos.EventPojo;
-import mmm.jlnf.fetedelascience.RecyclerViewAdapter;
+import mmm.jlnf.fetedelascience.pojos.EventPojo;
 
 /**
  * Created by nicolas on 23/01/18.

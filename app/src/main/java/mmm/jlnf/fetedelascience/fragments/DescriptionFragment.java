@@ -1,4 +1,4 @@
-package mmm.jlnf.fetedelascience;
+package mmm.jlnf.fetedelascience.fragments;
 
 import android.Manifest;
 import android.app.Fragment;
@@ -38,9 +38,11 @@ import java.util.TimeZone;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import mmm.jlnf.fetedelascience.Pojos.EventPojo;
+import mmm.jlnf.fetedelascience.activity.MapsActivity;
+import mmm.jlnf.fetedelascience.activity.NotationActivity;
+import mmm.jlnf.fetedelascience.pojos.EventPojo;
+import mmm.jlnf.fetedelascience.R;
 
-import static android.R.layout.*;
 
 /**
  * Created by nicolas on 06/02/18.
@@ -100,10 +102,10 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
                         for (int i = 0; i <= 10; i++) remplissage.add(i * 10);
 
                         // Creating adapter for spinner
-                        ArrayAdapter<Integer> dataAdapter = new ArrayAdapter<Integer>(getActivity(), simple_spinner_item, remplissage);
+                        ArrayAdapter<Integer> dataAdapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, remplissage);
 
                         // Drop down layout style - list view with radio button
-                        dataAdapter.setDropDownViewResource(simple_spinner_dropdown_item);
+                        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                         // attaching data adapter to spinner
                         spinner.setAdapter(dataAdapter);

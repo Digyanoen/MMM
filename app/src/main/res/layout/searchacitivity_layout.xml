@@ -50,7 +50,14 @@
     android:layout_marginBottom="50dp"
         android:text="Rechercher"/>
 
+    <FrameLayout
+        android:id="@+id/test"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/radioGroup">
 
+    </FrameLayout>
 
 
 </RelativeLayout>

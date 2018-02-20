@@ -1,24 +1,12 @@
-package mmm.jlnf.fetedelascience.Database;
+package mmm.jlnf.fetedelascience.database;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 
-import mmm.jlnf.fetedelascience.Pojos.EventPojo;
-import mmm.jlnf.fetedelascience.R;
+import mmm.jlnf.fetedelascience.pojos.EventPojo;
 
 /**
  * Created by nicolas on 20/01/18.
@@ -41,7 +29,7 @@ public class DatabaseHandler implements IDatabaseHandler{
 
     @Override
     public List<EventPojo> getEventByCoordinates(LatLng center, double rayon) {
-        return null;
+        return dbManager.getPojosByCoordinate(center,rayon);
     }
 
 

@@ -1,4 +1,4 @@
-package mmm.jlnf.fetedelascience.Pojos;
+package mmm.jlnf.fetedelascience.pojos;
 
 /**
  * Created by nicolas on 17/02/18.

@@ -1,5 +1,6 @@
-package mmm.jlnf.fetedelascience.Pojos;
+package mmm.jlnf.fetedelascience.pojos;
 
+import com.google.gson.annotations.JsonAdapter;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -8,7 +9,8 @@ import com.j256.ormlite.table.DatabaseTable;
  */
 
 @DatabaseTable(tableName = "events")
-public class EventPojo {
+@JsonAdapter(EventPojoDeserializer.class)
+public class EventPojo{
 
     @DatabaseField(generatedId = true)
     private int id;
@@ -33,6 +35,23 @@ public class EventPojo {
     @DatabaseField(columnName = "dates")
     private String dates;
 
+    @DatabaseField
+    private Double lat;
+
+    @DatabaseField
+    private Double lng;
+
+    public EventPojo(String description_fr, String titre_fr, String ville, String mots_cles_fr, String departement, Double lat, Double lng) {
+        this.description_fr = description_fr;
+        this.titre_fr = titre_fr;
+        this.ville = ville;
+        this.mots_cles_fr = mots_cles_fr;
+        this.departement = departement;
+        this.lat = lat;
+        this.lng = lng;
+    }
+
+    public EventPojo(){}
 
     public String getDescription_fr() {
         return description_fr;
@@ -80,6 +99,36 @@ public class EventPojo {
 
     public void setDepartement(String departement) {
         this.departement = departement;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLng() {
+        return lng;
+    }
+
+    public void setLng(Double lng) {
+        this.lng = lng;
+    }
+
+    @Override
+    public String toString() {
+        return "EventPojo{" +
+                "id=" + id +
+                ", description_fr='" + description_fr + '\'' +
+                ", titre_fr='" + titre_fr + '\'' +
+                ", ville='" + ville + '\'' +
+                ", mots_cles_fr='" + mots_cles_fr + '\'' +
+                ", departement='" + departement + '\'' +
+                ", lat=" + lat +
+                ", lng=" + lng +
+                '}';
     }
 
     public String getIdentifiant() {

@@ -1,4 +1,4 @@
-package mmm.jlnf.fetedelascience;
+package mmm.jlnf.fetedelascience.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mmm.jlnf.fetedelascience.R;
 
 /**
  * Created by nicolas on 12/02/18.

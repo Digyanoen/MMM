@@ -1,4 +1,4 @@
-package mmm.jlnf.fetedelascience.Database;
+package mmm.jlnf.fetedelascience.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,7 +21,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
 
-import mmm.jlnf.fetedelascience.Pojos.EventPojo;
+import mmm.jlnf.fetedelascience.pojos.EventPojo;
 import mmm.jlnf.fetedelascience.R;
 
 /**
@@ -94,6 +94,10 @@ public class SQLDatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 
                 EventPojo eventPojo = gson.fromJson(object, EventPojo.class);
+//                Log.e("TAGGGG", eventPojo.toString());
+//                JsonElement jsonElement = object.get("geolocalisation");
+//                JsonArray geo = jsonElement.getAsJsonArray();
+//                Double[] geoPojo = gson.fromJson(geo, Double[].class);
                 DBManager.getInstance().createEventPojo(eventPojo);
             }
 

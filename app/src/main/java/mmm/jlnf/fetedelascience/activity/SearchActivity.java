@@ -1,4 +1,4 @@
-package mmm.jlnf.fetedelascience;
+package mmm.jlnf.fetedelascience.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mmm.jlnf.fetedelascience.R;
+import mmm.jlnf.fetedelascience.database.DatabaseHandler;
+import mmm.jlnf.fetedelascience.database.IDatabaseHandler;
 
 /**
  * Created by nicolas on 21/01/18.
@@ -20,13 +23,16 @@ public class SearchActivity extends Activity{
     @BindView(R.id.data) TextView textView;
     @BindView(R.id.radioGroup)
     RadioGroup radioGroup;
+    private IDatabaseHandler databaseHandler;
 
 
     @Override
     public void onCreate(Bundle onSavedInBundle) {
         super.onCreate(onSavedInBundle);
+        databaseHandler = new DatabaseHandler(this);
         setContentView(R.layout.searchacitivity_layout);
         ButterKnife.bind(this);
+
     }
 
 
