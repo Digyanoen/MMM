@@ -7,8 +7,6 @@ import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -29,6 +27,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private List<Marker> markers;
     private DBManager dbManager;
+    private List<EventPojo> itinéraire;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +37,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         dbManager = DBManager.getInstance();
 
         setContentView(R.layout.activity_maps);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        itinéraire = (List<EventPojo>) getIntent().getSerializableExtra("itis");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mMap.clear();
+    }
 
     /**
      * Manipulates the map once available.
@@ -57,12 +67,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        if(itinéraire.size() >2){
+            ItineraireTask it = new ItineraireTask(this, mMap);
+            it.setPassages(itinéraire);
+            it.execute();
+        }
         mMap.setOnCameraIdleListener(() -> {
             LatLng topLeft = mMap.getProjection().fromScreenLocation(new Point(0,0));
             LatLng center = mMap.getCameraPosition().target;
             double rayon = Math.sqrt(Math.pow(topLeft.latitude - center.latitude,2) + Math.pow(topLeft.longitude - center.longitude,2));
 
             List<EventPojo> res = dbManager.getPojosByCoordinate(center, rayon);
+
 
             Log.e("MapEVENT", String.valueOf(res));
 
@@ -102,7 +118,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     markers.add(m);
                 }
             }
-            if(markers.size() >1)new ItineraireTask(this, mMap, markers.get(0).getPosition(), markers.get(markers.size()-1).getPosition()).execute();
 
         });
 

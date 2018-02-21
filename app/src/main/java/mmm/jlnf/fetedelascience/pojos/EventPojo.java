@@ -4,13 +4,15 @@ import com.google.gson.annotations.JsonAdapter;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.Serializable;
+
 /**
  * Created by nicolas on 21/01/18.
  */
 
 @DatabaseTable(tableName = "events")
 @JsonAdapter(EventPojoDeserializer.class)
-public class EventPojo{
+public class EventPojo implements Serializable{
 
     @DatabaseField(generatedId = true)
     private int id;
