@@ -43,12 +43,14 @@ public class EventPojo implements Serializable{
     @DatabaseField
     private Double lng;
 
-    public EventPojo(String description_fr, String titre_fr, String ville, String mots_cles_fr, String departement, Double lat, Double lng) {
+    public EventPojo(String description_fr, String titre_fr, String ville, String mots_cles_fr, String departement, String identifiant, String dates, Double lat, Double lng) {
         this.description_fr = description_fr;
         this.titre_fr = titre_fr;
         this.ville = ville;
         this.mots_cles_fr = mots_cles_fr;
         this.departement = departement;
+        this.identifiant = identifiant;
+        this.dates = dates;
         this.lat = lat;
         this.lng = lng;
     }

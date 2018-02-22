@@ -71,11 +71,6 @@
         android:id="@+id/notate"
         android:text="Noter l'événement"/>
 
-  <!--  <android.support.v7.widget.RecyclerView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/avis">
-    </android.support.v7.widget.RecyclerView>-->
 
 
 </LinearLayout>

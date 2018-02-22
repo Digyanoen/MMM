@@ -12,8 +12,12 @@ import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -61,6 +65,7 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
     TextView date;
     @BindView(R.id.remplissage)
     FrameLayout frameLayout;
+
     private Spinner spinner;
     private TextView textView;
 
@@ -79,6 +84,7 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.eventlayoutdesc, container, false);
         ButterKnife.bind(this, view);
+
         FragmentManager fragmentManager = getFragmentManager();
         notationRecyclerFragment = new NotationRecyclerFragment();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -86,51 +92,15 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
         fragmentTransaction.commit();
         textView = new TextView(getActivity());
         spinner = new Spinner(getActivity());
+        setHasOptionsMenu(true);
 
 
 
             databaseReference = FirebaseDatabase.getInstance().getReference();
+            setItem();
 
 
-            databaseReference.child(eventPojo.getIdentifiant()).child("Remplissage").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Long value = (Long) dataSnapshot.getValue();
-                    if(MapsActivity.isOrganisteur) {
-                        frameLayout.addView(spinner);
-                        remplissage = new ArrayList<Integer>();
-                        for (int i = 0; i <= 10; i++) remplissage.add(i * 10);
 
-                        // Creating adapter for spinner
-                        ArrayAdapter<Integer> dataAdapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, remplissage);
-
-                        // Drop down layout style - list view with radio button
-                        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                        // attaching data adapter to spinner
-                        spinner.setAdapter(dataAdapter);
-                        if (value != null) {
-                            spinner.setSelection(remplissage.indexOf(value.intValue()));
-                            Log.e("tete", "pouetpouet");
-                            Log.e("erre", value.toString());
-
-                        }
-                    }
-                    else {
-                        frameLayout.addView(textView);
-                        if(value != null){
-                            textView.setText(value.toString());
-                        }else {
-                            textView.setText("0");
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
 
             // Si l'utilisateur est l'oganisateur, on rajoute un listener sur le spinner
         if(MapsActivity.isOrganisteur) spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -229,5 +199,76 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
 
     public void setEventPojo(EventPojo eventPojo) {
         this.eventPojo = eventPojo;
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.e("test", "pourt");
+        switch (item.getItemId()) {
+            case R.id.orga:
+                MapsActivity.isOrganisteur = !MapsActivity.isOrganisteur;
+                if(MapsActivity.isOrganisteur){
+                    frameLayout.removeView(textView);
+                }
+                else{
+                    frameLayout.removeView(spinner);
+                }
+                setItem();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+    public void setItem(){
+        databaseReference.child(eventPojo.getIdentifiant()).child("Remplissage").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Long value = (Long) dataSnapshot.getValue();
+                if(MapsActivity.isOrganisteur) {
+                    frameLayout.addView(spinner);
+                    remplissage = new ArrayList<Integer>();
+                    for (int i = 0; i <= 10; i++) remplissage.add(i * 10);
+
+                    // Creating adapter for spinner
+                    ArrayAdapter<Integer> dataAdapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, remplissage);
+
+                    // Drop down layout style - list view with radio button
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                    // attaching data adapter to spinner
+                    spinner.setAdapter(dataAdapter);
+                    if (value != null) {
+                        spinner.setSelection(remplissage.indexOf(value.intValue()));
+                        Log.e("tete", "pouetpouet");
+                        Log.e("erre", value.toString());
+
+                    }
+                }
+                else {
+                    frameLayout.addView(textView);
+                    if(value != null){
+                        textView.setText(value.toString());
+                    }else {
+                        textView.setText("0");
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        inflater.inflate(R.menu.action_bar, menu);
+        Log.e("toto", "coucou");
+
     }
 }

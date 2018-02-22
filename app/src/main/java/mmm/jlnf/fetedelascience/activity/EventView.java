@@ -1,10 +1,14 @@
 package mmm.jlnf.fetedelascience.activity;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ProgressBar;
 
 import butterknife.BindView;
@@ -19,9 +23,11 @@ import mmm.jlnf.fetedelascience.fragments.RecyclerFragment;
  * Created by nicolas on 21/01/18.
  */
 
-public class EventView extends Activity{
+public class EventView extends AppCompatActivity {
 
     @BindView(R.id.progress) ProgressBar progressBar;
+    @BindView(R.id.my_toolbar)
+    Toolbar toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,6 +36,7 @@ public class EventView extends Activity{
         ButterKnife.bind(this);
         DBManager dbmanager = DBManager.getInstance();
         Intent i = getIntent();
+        setSupportActionBar(toolbar);
 
         NotationRecyclerFragment notationRecyclerFragment = new NotationRecyclerFragment();
         RecyclerFragment recycler = new RecyclerFragment();
@@ -49,5 +56,8 @@ public class EventView extends Activity{
         asyncHandler.execute(i.getStringExtra("type"), i.getStringExtra("data"));
 
     }
+
+
+
 
 }
