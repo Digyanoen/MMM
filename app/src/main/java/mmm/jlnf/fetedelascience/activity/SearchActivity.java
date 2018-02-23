@@ -59,9 +59,18 @@ public class SearchActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent i = getIntent();
         switch (item.getItemId()) {
             case R.id.orga:
                 MapsActivity.isOrganisteur = !MapsActivity.isOrganisteur;
+                return true;
+            case R.id.mapActivity:
+                i.setClass(this, MapsActivity.class);
+                startActivity(i);
+                return true;
+            case R.id.rechercheActivity:
+                i.setClass(this, SearchActivity.class);
+                startActivity(i);
                 return true;
 
             default:

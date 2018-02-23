@@ -265,10 +265,4 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
         });
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
-        inflater.inflate(R.menu.action_bar, menu);
-        Log.e("toto", "coucou");
-
-    }
 }

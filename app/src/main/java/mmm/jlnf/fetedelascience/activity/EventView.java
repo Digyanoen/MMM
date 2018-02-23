@@ -57,6 +57,31 @@ public class EventView extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent i = getIntent();
+        switch (item.getItemId()) {
+            case R.id.mapActivity:
+                i.setClass(this, MapsActivity.class);
+                startActivity(i);
+                return true;
+            case R.id.rechercheActivity:
+                i.setClass(this, SearchActivity.class);
+                startActivity(i);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_bar, menu);
+        return true;
+    }
 
 
 

@@ -1,5 +1,7 @@
 package mmm.jlnf.fetedelascience.pojos;
 
+import android.util.Log;
+
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -30,7 +32,8 @@ public class EventPojoDeserializer implements JsonDeserializer<EventPojo> {
         JsonElement desc = jsonObject.get("description_fr");
         JsonElement titre = jsonObject.get("titre_fr");
         JsonElement ville = jsonObject.get("ville");
-        JsonElement mots = jsonObject.get("mots_cle_fr");
+        JsonElement mots = jsonObject.get("mots_cles_fr");
+        if(mots != null)Log.e("mots clés", mots.getAsString());
         JsonElement dep = jsonObject.get("departement");
         JsonElement identifiant = jsonObject.get("identifiant");
         JsonElement dates = jsonObject.get("dates");

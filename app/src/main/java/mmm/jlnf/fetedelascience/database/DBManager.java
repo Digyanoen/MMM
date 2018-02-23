@@ -1,6 +1,7 @@
 package mmm.jlnf.fetedelascience.database;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.j256.ormlite.stmt.QueryBuilder;
@@ -86,6 +87,8 @@ public class DBManager {
      */
     public List<EventPojo> getPojosByCriteria(String type, String data){
         List<EventPojo> eventList = null;
+        Log.e("type", type);
+        Log.e("criteria", data);
         try {
             if(type.equals("mots-clés")){
                 QueryBuilder<EventPojo, String> builder = getHelper().getEventPojoDao().queryBuilder();
@@ -98,6 +101,7 @@ public class DBManager {
         } catch (SQLException e) {
             eventList =  new ArrayList<>();
         }
+        Log.e("eventlist", eventList.toString());
         return eventList;
     }
 
