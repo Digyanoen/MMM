@@ -45,8 +45,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onStart();
         itinéraire = (List<EventPojo>) getIntent().getSerializableExtra("itis");
         if(itinéraire == null) itinéraire = new ArrayList<>();
-        double latitude = getIntent().getDoubleExtra("latitude",0.0);
-        double longitude = getIntent().getDoubleExtra("longitude",0.0);
+        double latitude = getIntent().getDoubleExtra("latitude",48.8534);
+        double longitude = getIntent().getDoubleExtra("longitude",2.3488);
         center = new LatLng(latitude,longitude);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
