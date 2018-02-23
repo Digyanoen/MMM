@@ -61,10 +61,6 @@ public class EventView extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent i = getIntent();
         switch (item.getItemId()) {
-            case R.id.mapActivity:
-                i.setClass(this, MapsActivity.class);
-                startActivity(i);
-                return true;
             case R.id.rechercheActivity:
                 i.setClass(this, SearchActivity.class);
                 startActivity(i);

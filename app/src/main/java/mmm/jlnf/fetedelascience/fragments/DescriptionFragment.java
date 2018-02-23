@@ -217,7 +217,14 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
                 }
                 setItem();
                 return true;
-
+            case R.id.mapActivity:
+                Intent i = getActivity().getIntent();
+                Log.e("caca", eventPojo.getLat() + " "+eventPojo.getLng());
+                i.setClass(getActivity(), MapsActivity.class);
+                i.putExtra("latitude", eventPojo.getLat());
+                i.putExtra("longitude", eventPojo.getLng());
+                startActivity(i);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
 
