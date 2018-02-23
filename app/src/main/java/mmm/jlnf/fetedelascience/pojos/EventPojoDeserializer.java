@@ -33,10 +33,11 @@ public class EventPojoDeserializer implements JsonDeserializer<EventPojo> {
         JsonElement titre = jsonObject.get("titre_fr");
         JsonElement ville = jsonObject.get("ville");
         JsonElement mots = jsonObject.get("mots_cles_fr");
-        if(mots != null)Log.e("mots clés", mots.getAsString());
         JsonElement dep = jsonObject.get("departement");
         JsonElement identifiant = jsonObject.get("identifiant");
         JsonElement dates = jsonObject.get("dates");
+        JsonElement image = jsonObject.get("image");
+        if(image != null)Log.e("image", image.getAsString());
         return new EventPojo(
                 desc == null? null:desc.getAsString(),
                 titre == null? null:titre.getAsString(),
@@ -44,6 +45,7 @@ public class EventPojoDeserializer implements JsonDeserializer<EventPojo> {
                 mots == null? null:mots.getAsString(),
                 dep == null? null:dep.getAsString(),
                 identifiant == null? null:identifiant.getAsString(),
+                image == null? null:image.getAsString(),
                 dates == null? null:dates.getAsString(),
                 lat,
                 lng

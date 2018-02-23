@@ -37,13 +37,16 @@ public class EventPojo implements Serializable{
     @DatabaseField(columnName = "dates")
     private String dates;
 
+    @DatabaseField(columnName = "image")
+    private String image;
+
     @DatabaseField
     private Double lat;
 
     @DatabaseField
     private Double lng;
 
-    public EventPojo(String description_fr, String titre_fr, String ville, String mots_cles_fr, String departement, String identifiant, String dates, Double lat, Double lng) {
+    public EventPojo(String description_fr, String titre_fr, String ville, String mots_cles_fr, String departement, String identifiant, String image, String dates, Double lat, Double lng) {
         this.description_fr = description_fr;
         this.titre_fr = titre_fr;
         this.ville = ville;
@@ -51,6 +54,7 @@ public class EventPojo implements Serializable{
         this.departement = departement;
         this.identifiant = identifiant;
         this.dates = dates;
+        this.image = image;
         this.lat = lat;
         this.lng = lng;
     }
@@ -149,5 +153,13 @@ public class EventPojo implements Serializable{
 
     public void setDates(String dates) {
         this.dates = dates;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

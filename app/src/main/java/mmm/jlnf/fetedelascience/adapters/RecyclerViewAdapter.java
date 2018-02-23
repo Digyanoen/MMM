@@ -3,10 +3,14 @@ package mmm.jlnf.fetedelascience.adapters;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -44,6 +48,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.description.setText(eventPojo.getDescription_fr());
         holder.currentPojo = eventPojo;
         holder.activity = activity;
+        Picasso.with(holder.imageView.getContext()).load(eventPojo.getImage()).centerCrop().fit().into(holder.imageView);
 
     }
 
@@ -60,6 +65,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         protected TextView title;
         @BindView(R.id.description_fr)
         protected TextView description;
+        @BindView(R.id.imageView)
+        protected ImageView imageView;
 
         protected EventPojo currentPojo;
         private Activity activity;
