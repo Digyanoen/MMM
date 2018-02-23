@@ -28,6 +28,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private List<Marker> markers;
     private DBManager dbManager;
     private List<EventPojo> itinéraire;
+    private LatLng center;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onStart();
         itinéraire = (List<EventPojo>) getIntent().getSerializableExtra("itis");
         if(itinéraire == null) itinéraire = new ArrayList<>();
+        double latitude = getIntent().getDoubleExtra("latitude",0.0);
+        double longitude = getIntent().getDoubleExtra("longitude",0.0);
+        center = new LatLng(latitude,longitude);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -122,6 +126,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         });
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(48.11,-1.68), 10f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(center, 10f));
     }
 }
