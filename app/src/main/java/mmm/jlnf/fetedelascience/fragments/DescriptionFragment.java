@@ -103,7 +103,7 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
 
 
             // Si l'utilisateur est l'oganisateur, on rajoute un listener sur le spinner
-        if(MapsActivity.isOrganisteur) spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     int remplissage = (int) parent.getItemAtPosition(position);
@@ -127,7 +127,7 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
         title.setText(eventPojo.getTitre_fr());
         desc.setText(eventPojo.getDescription_fr());
         ville.setText(eventPojo.getVille());
-        date.setText(eventPojo.getDates().replace(';', '\n'));
+        date.setText(eventPojo.getDates().replace(';', ' '));
 //        this.eventPojo = currentPojo;
         notationRecyclerFragment.getNotationRecyclerAdapter().getCommentForEvent(eventPojo.getIdentifiant());
 
