@@ -1,5 +1,6 @@
 package mmm.jlnf.fetedelascience.activity;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -22,7 +23,6 @@ import mmm.jlnf.fetedelascience.database.*;
 import mmm.jlnf.fetedelascience.pojos.EventPojo;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-    public static boolean isOrganisteur = false;
 
     private GoogleMap mMap;
     private List<Marker> markers;
@@ -57,6 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onStop() {
         super.onStop();
+        markers.clear();
         mMap.clear();
     }
 
@@ -125,6 +126,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
         });
+
+        mMap.setOnMarkerClickListener(marker -> {
+                    Intent intent = new Intent(getApplicationContext(), EventView.class);
+                    intent.putExtra("EventID", (Integer) marker.getTag());
+                    startActivity(intent);
+                    return true;
+                }
+        );
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(center, 10f));
     }

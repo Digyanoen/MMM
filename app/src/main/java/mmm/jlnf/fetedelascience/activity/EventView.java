@@ -10,14 +10,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mmm.jlnf.fetedelascience.R;
 import mmm.jlnf.fetedelascience.SearchAsyncHandler;
 import mmm.jlnf.fetedelascience.database.DBManager;
+import mmm.jlnf.fetedelascience.fragments.DescriptionFragment;
 import mmm.jlnf.fetedelascience.fragments.NotationRecyclerFragment;
 import mmm.jlnf.fetedelascience.fragments.RecyclerFragment;
+import mmm.jlnf.fetedelascience.pojos.EventPojo;
 
 /**
  * Created by nicolas on 21/01/18.
@@ -28,33 +33,60 @@ public class EventView extends AppCompatActivity {
     @BindView(R.id.progress) ProgressBar progressBar;
     @BindView(R.id.my_toolbar)
     Toolbar toolbar;
+    private NotationRecyclerFragment notationRecyclerFragment;
+    private RecyclerFragment recycler;
+    private DescriptionFragment descriptionFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_view);
         ButterKnife.bind(this);
-        DBManager dbmanager = DBManager.getInstance();
-        Intent i = getIntent();
-        setSupportActionBar(toolbar);
 
-        NotationRecyclerFragment notationRecyclerFragment = new NotationRecyclerFragment();
-        RecyclerFragment recycler = new RecyclerFragment();
+
+        notationRecyclerFragment = new NotationRecyclerFragment();
+        recycler = new RecyclerFragment();
+        descriptionFragment = new DescriptionFragment();
+    }
+
+    @Override
+    protected void onStart() {
+        DBManager dbmanager = DBManager.getInstance();
+
+        Intent i = getIntent();
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.eventlarge, recycler );
+
+        int eventID = i.getIntExtra("EventID", -1);
+
+        if(eventID != -1){
+            EventPojo pojo = dbmanager.getPojoByID(eventID);
+            if(pojo != null){
+                descriptionFragment.setEventPojo(pojo);
+                fragmentTransaction.add(R.id.eventlarge,descriptionFragment);
+                descriptionFragment.update();
+            }else{
+                Toast.makeText(getApplicationContext(),"Cet événement n'existe pas !",Toast.LENGTH_LONG).show();
+                eventID = -1;
+            }
+        }
+
+        if(eventID == -1){
+            setSupportActionBar(toolbar);
+            fragmentTransaction.add(R.id.eventlarge, recycler);
+
+            SearchAsyncHandler asyncHandler = new SearchAsyncHandler(progressBar);
+
+            asyncHandler.setListener(list -> {
+                recycler.updateEventsList(list);
+                recycler.getAdapter().notifyDataSetChanged();
+            });
+
+            asyncHandler.execute(i.getStringExtra("type"), i.getStringExtra("data"));
+        }
         fragmentTransaction.commit();
-
-        SearchAsyncHandler asyncHandler = new SearchAsyncHandler(progressBar);
-
-        asyncHandler.setListener(list -> {
-            recycler.updateEventsList(list);
-            recycler.getAdapter().notifyDataSetChanged();
-        });
-
-        asyncHandler.execute(i.getStringExtra("type"), i.getStringExtra("data"));
-
+        super.onStart();
     }
 
     @Override

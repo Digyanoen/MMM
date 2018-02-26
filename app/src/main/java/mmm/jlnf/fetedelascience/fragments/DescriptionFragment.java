@@ -12,18 +12,14 @@ import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +40,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mmm.jlnf.fetedelascience.activity.MapsActivity;
 import mmm.jlnf.fetedelascience.activity.NotationActivity;
+import mmm.jlnf.fetedelascience.activity.SearchActivity;
 import mmm.jlnf.fetedelascience.pojos.EventPojo;
 import mmm.jlnf.fetedelascience.R;
 
@@ -208,8 +205,8 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
         Log.e("test", "pourt");
         switch (item.getItemId()) {
             case R.id.orga:
-                MapsActivity.isOrganisteur = !MapsActivity.isOrganisteur;
-                if(MapsActivity.isOrganisteur){
+                SearchActivity.isOrganisteur = !SearchActivity.isOrganisteur;
+                if(SearchActivity.isOrganisteur){
                     frameLayout.removeView(textView);
                 }
                 else{
@@ -235,7 +232,7 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Long value = (Long) dataSnapshot.getValue();
-                if(MapsActivity.isOrganisteur) {
+                if(SearchActivity.isOrganisteur) {
                     frameLayout.addView(spinner);
                     remplissage = new ArrayList<Integer>();
                     for (int i = 0; i <= 10; i++) remplissage.add(i * 10);

@@ -1,11 +1,9 @@
 package mmm.jlnf.fetedelascience.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,6 +23,8 @@ import mmm.jlnf.fetedelascience.database.IDatabaseHandler;
  */
 
 public class SearchActivity extends AppCompatActivity{
+
+    public static boolean isOrganisteur = false;
 
     @BindView(R.id.data) TextView textView;
     @BindView(R.id.radioGroup)
@@ -62,7 +62,7 @@ public class SearchActivity extends AppCompatActivity{
         Intent i = getIntent();
         switch (item.getItemId()) {
             case R.id.orga:
-                MapsActivity.isOrganisteur = !MapsActivity.isOrganisteur;
+                isOrganisteur = !isOrganisteur;
                 return true;
             case R.id.mapActivity:
                 i.setClass(this, MapsActivity.class);

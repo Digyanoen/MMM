@@ -121,5 +121,11 @@ public class DBManager {
     }
 
 
-
+    public EventPojo getPojoByID(int eventID) {
+        try {
+            return getHelper().getEventPojoDao().queryForId(String.valueOf(eventID));
+        } catch (SQLException e) {
+            return null;
+        }
+    }
 }
