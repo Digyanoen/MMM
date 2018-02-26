@@ -70,6 +70,7 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
     private NotationRecyclerFragment notationRecyclerFragment;
     private DatabaseReference databaseReference;
     private List<Integer> remplissage;
+    private ItineraireListener itineraireListener;
 
     public DescriptionFragment() {
         super();
@@ -125,7 +126,6 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
         desc.setText(eventPojo.getDescription_fr());
         ville.setText(eventPojo.getVille());
         date.setText(eventPojo.getDates().replace(';', ' '));
-//        this.eventPojo = currentPojo;
         notationRecyclerFragment.getNotationRecyclerAdapter().getCommentForEvent(eventPojo.getIdentifiant());
 
 
@@ -266,6 +266,22 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
 
             }
         });
+    }
+
+    @OnClick(R.id.addToList)
+    public void addToList(){
+        itineraireListener.onAddItineraire(eventPojo);
+
+    }
+
+    public void setItineraireListener(ItineraireListener i){
+        Log.e("listener", i.toString());
+        this.itineraireListener = i;
+
+    }
+
+    public interface ItineraireListener{
+        void onAddItineraire(EventPojo e);
     }
 
 }

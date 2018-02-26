@@ -12,15 +12,13 @@ import android.view.MenuItem;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mmm.jlnf.fetedelascience.R;
 import mmm.jlnf.fetedelascience.SearchAsyncHandler;
 import mmm.jlnf.fetedelascience.database.DBManager;
 import mmm.jlnf.fetedelascience.fragments.DescriptionFragment;
-import mmm.jlnf.fetedelascience.fragments.NotationRecyclerFragment;
+import mmm.jlnf.fetedelascience.fragments.ItineraireFragment;
 import mmm.jlnf.fetedelascience.fragments.RecyclerFragment;
 import mmm.jlnf.fetedelascience.pojos.EventPojo;
 
@@ -28,14 +26,15 @@ import mmm.jlnf.fetedelascience.pojos.EventPojo;
  * Created by nicolas on 21/01/18.
  */
 
-public class EventView extends AppCompatActivity {
+public class EventView extends AppCompatActivity implements DescriptionFragment.ItineraireListener{
 
     @BindView(R.id.progress) ProgressBar progressBar;
     @BindView(R.id.my_toolbar)
     Toolbar toolbar;
-    private NotationRecyclerFragment notationRecyclerFragment;
     private RecyclerFragment recycler;
     private DescriptionFragment descriptionFragment;
+
+    private ItineraireFragment itineraireFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,10 +42,11 @@ public class EventView extends AppCompatActivity {
         setContentView(R.layout.event_view);
         ButterKnife.bind(this);
 
-
-        notationRecyclerFragment = new NotationRecyclerFragment();
+        setSupportActionBar(toolbar);
+        itineraireFragment = new ItineraireFragment();
         recycler = new RecyclerFragment();
         descriptionFragment = new DescriptionFragment();
+        descriptionFragment.setItineraireListener(this);
     }
 
     @Override
@@ -112,5 +112,10 @@ public class EventView extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onAddItineraire(EventPojo e) {
+        itineraireFragment.addToList(e);
+        Toast.makeText(this, "Evénement ajouté à l'itinéraire", Toast.LENGTH_SHORT);
 
+    }
 }
