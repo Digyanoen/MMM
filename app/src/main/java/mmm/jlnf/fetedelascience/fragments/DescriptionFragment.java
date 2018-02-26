@@ -202,21 +202,22 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.e("test", "pourt");
         switch (item.getItemId()) {
             case R.id.orga:
                 SearchActivity.isOrganisteur = !SearchActivity.isOrganisteur;
                 if(SearchActivity.isOrganisteur){
                     frameLayout.removeView(textView);
+                    Toast.makeText(getActivity(), "Vous êtes organisateur", Toast.LENGTH_LONG).show();
+
                 }
                 else{
                     frameLayout.removeView(spinner);
+                    Toast.makeText(getActivity(), "Vous n'êtes plus l'organisateur", Toast.LENGTH_LONG).show();
                 }
                 setItem();
                 return true;
             case R.id.mapActivity:
                 Intent i = getActivity().getIntent();
-                Log.e("caca", eventPojo.getLat() + " "+eventPojo.getLng());
                 i.setClass(getActivity(), MapsActivity.class);
                 i.putExtra("latitude", eventPojo.getLat());
                 i.putExtra("longitude", eventPojo.getLng());
@@ -247,8 +248,6 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
                     spinner.setAdapter(dataAdapter);
                     if (value != null) {
                         spinner.setSelection(remplissage.indexOf(value.intValue()));
-                        Log.e("tete", "pouetpouet");
-                        Log.e("erre", value.toString());
 
                     }
                 }

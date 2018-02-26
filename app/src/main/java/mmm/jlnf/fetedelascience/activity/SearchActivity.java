@@ -1,15 +1,18 @@
 package mmm.jlnf.fetedelascience.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,6 +66,11 @@ public class SearchActivity extends AppCompatActivity{
         switch (item.getItemId()) {
             case R.id.orga:
                 isOrganisteur = !isOrganisteur;
+                if(isOrganisteur){
+                    Toast.makeText(this, "Vous êtes organisateur", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(this, "Vous n'êtes plus l'organisateur", Toast.LENGTH_LONG).show();
+                }
                 return true;
             case R.id.mapActivity:
                 i.setClass(this, MapsActivity.class);
