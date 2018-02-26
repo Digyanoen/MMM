@@ -14,7 +14,7 @@ import java.io.Serializable;
 @JsonAdapter(EventPojoDeserializer.class)
 public class EventPojo implements Serializable{
 
-    @DatabaseField(id = true)
+    @DatabaseField(generatedId = true)
     private int id;
 
     @DatabaseField(columnName = "description_fr")
@@ -46,8 +46,7 @@ public class EventPojo implements Serializable{
     @DatabaseField
     private Double lng;
 
-    public EventPojo(int id ,String description_fr, String titre_fr, String ville, String mots_cles_fr, String departement, String identifiant, String image, String dates, Double lat, Double lng) {
-        this.id = id;
+    public EventPojo(String description_fr, String titre_fr, String ville, String mots_cles_fr, String departement, String identifiant, String image, String dates, Double lat, Double lng) {
         this.description_fr = description_fr;
         this.titre_fr = titre_fr;
         this.ville = ville;
