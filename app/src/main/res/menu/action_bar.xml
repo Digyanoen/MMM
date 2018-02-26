@@ -11,6 +11,10 @@
         app:showAsAction="never"
         android:id="@+id/mapActivity"/>
     <item
+        android:title="Itinéraire"
+        app:showAsAction="never"
+        android:id="@+id/itineraireFragment"/>
+    <item
         android:id="@+id/orga"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="Je suis l'organisateur"

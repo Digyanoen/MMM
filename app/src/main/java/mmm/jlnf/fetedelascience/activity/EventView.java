@@ -98,7 +98,14 @@ public class EventView extends AppCompatActivity implements DescriptionFragment.
                 i.setClass(this, SearchActivity.class);
                 startActivity(i);
                 return true;
-
+            case R.id.itineraireFragment:
+                FragmentManager fragmentManager= getFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.eventlarge, itineraireFragment)
+                        .addToBackStack(null)
+                        .commit();
+                fragmentManager.executePendingTransactions();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
 

@@ -21,7 +21,7 @@ import mmm.jlnf.fetedelascience.pojos.EventPojo;
 public class ItineraireAdapter extends RecyclerView.Adapter<ItineraireAdapter.ItineraireHolder>{
 
     private List<EventPojo> pojoList;
-    public ItineraireAdapter(List<EventPojo> pojoList, Activity activity) {
+    public ItineraireAdapter(List<EventPojo> pojoList) {
 
         this.pojoList = pojoList;
     }
@@ -52,7 +52,7 @@ public class ItineraireAdapter extends RecyclerView.Adapter<ItineraireAdapter.It
 
         public ItineraireHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(itemView);
+            ButterKnife.bind(this, itemView);
         }
 
     }
