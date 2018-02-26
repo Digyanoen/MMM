@@ -69,7 +69,9 @@ public class ItineraireFragment extends Fragment {
 
     @OnClick(R.id.mapItineraire)
     public void onClick() {
-        if(pojoList.size() >= 1) {
+        Log.e("toto", "toto");
+        if(pojoList.size() >= 2) {
+            Log.e("tata", "tata");
             Intent i = getActivity().getIntent();
             i.setClass(getActivity(), MapsActivity.class);
             i.putExtra("itis", pojoList);

@@ -73,7 +73,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        if(itineraire.size() >2){
+        if(itineraire.size() >=2){
             ItineraireTask it = new ItineraireTask(this, mMap);
             it.setPassages(itineraire);
             it.execute();

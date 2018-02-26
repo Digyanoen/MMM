@@ -83,9 +83,9 @@ public class ItineraireTask extends AsyncTask<Void, Integer, Boolean> {
             //Construction de l'url à appeler
             StringBuilder url = new StringBuilder("https://maps.googleapis.com/maps/api/directions/xml?sensor=false&language=fr");
             url.append("&origin=");
-           // url.append(editDepart.getLat()+","+editDepart.getLng());
+            url.append(editDepart.getLat()+","+editDepart.getLng());
             url.append("&destination=");
-            //url.append(editArrivee.getLat()+","+editArrivee.getLng());
+            url.append(editArrivee.getLat()+","+editArrivee.getLng());
             Log.e("URL build", "YOOOOOOO2");
             Log.e("URL build", String.valueOf(listPassage.isEmpty()));
             if(!listPassage.isEmpty()){
@@ -93,7 +93,7 @@ public class ItineraireTask extends AsyncTask<Void, Integer, Boolean> {
                  String tmp = "";
                 for (EventPojo p : listPassage) {
                     Log.e("URL build", "4");
-                   // tmp = tmp.concat(p.getLat()+","+p.getLng()+"|");
+                    tmp = tmp.concat(p.getLat()+","+p.getLng()+"|");
                 }
                 Log.e("URL build", "5");
 
@@ -209,16 +209,17 @@ public class ItineraireTask extends AsyncTask<Void, Integer, Boolean> {
             MarkerOptions markerB = new MarkerOptions();
             markerB.position(new LatLng(editArrivee.getLat(),editArrivee.getLng()));
             markerB.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-
+*/
             //On met à jour la carte
 //            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lstLatLng.get(0), 10));
             gMap.addPolyline(polylines);
-            gMap.addMarker(markerA);
+            //gMap.addMarker(markerA);
             for (EventPojo p : listPassage) {
-                gMap.addMarker(new MarkerOptions().position(new LatLng(p.getLat(),p.getLng())));*/
+                gMap.addMarker(new MarkerOptions().position(new LatLng(p.getLat(),p.getLng())));
+                Log.e("tt", "tutu");
             }
            // gMap.addMarker(markerB);
-       // }
+        }
     }
 
 }
