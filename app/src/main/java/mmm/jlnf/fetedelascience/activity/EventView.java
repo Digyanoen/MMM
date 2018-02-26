@@ -26,7 +26,7 @@ import mmm.jlnf.fetedelascience.pojos.EventPojo;
  * Created by nicolas on 21/01/18.
  */
 
-public class EventView extends AppCompatActivity implements DescriptionFragment.ItineraireListener{
+public class EventView extends AppCompatActivity implements DescriptionFragment.ItineraireListener, RecyclerFragment.EventRecyclerListener {
 
     @BindView(R.id.progress) ProgressBar progressBar;
     @BindView(R.id.my_toolbar)
@@ -45,6 +45,7 @@ public class EventView extends AppCompatActivity implements DescriptionFragment.
         setSupportActionBar(toolbar);
         itineraireFragment = new ItineraireFragment();
         recycler = new RecyclerFragment();
+        recycler.setOnEventRecyclerListener(this);
         descriptionFragment = new DescriptionFragment();
         descriptionFragment.setItineraireListener(this);
     }
@@ -64,7 +65,8 @@ public class EventView extends AppCompatActivity implements DescriptionFragment.
             EventPojo pojo = dbmanager.getPojoByID(eventID);
             if(pojo != null){
                 descriptionFragment.setEventPojo(pojo);
-                fragmentTransaction.add(R.id.eventlarge,descriptionFragment);
+                fragmentTransaction.add(R.id.eventlarge,descriptionFragment).commit();
+                fragmentManager.executePendingTransactions();
                 descriptionFragment.update();
             }else{
                 Toast.makeText(getApplicationContext(),"Cet événement n'existe pas !",Toast.LENGTH_LONG).show();
@@ -73,7 +75,6 @@ public class EventView extends AppCompatActivity implements DescriptionFragment.
         }
 
         if(eventID == -1){
-            setSupportActionBar(toolbar);
             fragmentTransaction.add(R.id.eventlarge, recycler);
 
             SearchAsyncHandler asyncHandler = new SearchAsyncHandler(progressBar);
@@ -82,10 +83,10 @@ public class EventView extends AppCompatActivity implements DescriptionFragment.
                 recycler.updateEventsList(list);
                 recycler.getAdapter().notifyDataSetChanged();
             });
+            fragmentTransaction.commit();
 
             asyncHandler.execute(i.getStringExtra("type"), i.getStringExtra("data"));
         }
-        fragmentTransaction.commit();
         super.onStart();
     }
 
@@ -115,7 +116,19 @@ public class EventView extends AppCompatActivity implements DescriptionFragment.
     @Override
     public void onAddItineraire(EventPojo e) {
         itineraireFragment.addToList(e);
-        Toast.makeText(this, "Evénement ajouté à l'itinéraire", Toast.LENGTH_SHORT);
+        Toast.makeText(this, "Evénement ajouté à l'itinéraire", Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    public void onEventRecyclerListener(EventPojo pojo) {
+        FragmentManager fragmentManager = getFragmentManager();
+        descriptionFragment.setEventPojo(pojo);
+        fragmentManager.beginTransaction()
+                .replace(R.id.eventlarge, descriptionFragment)
+                .addToBackStack(null)
+                .commit();
+        fragmentManager.executePendingTransactions();
+        descriptionFragment.update();
     }
 }

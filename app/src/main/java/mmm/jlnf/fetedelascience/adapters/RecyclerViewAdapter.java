@@ -18,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import mmm.jlnf.fetedelascience.R;
 import mmm.jlnf.fetedelascience.fragments.DescriptionFragment;
+import mmm.jlnf.fetedelascience.fragments.RecyclerFragment;
 import mmm.jlnf.fetedelascience.pojos.EventPojo;
 
 /**
@@ -26,12 +27,12 @@ import mmm.jlnf.fetedelascience.pojos.EventPojo;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
-    private Activity activity;
+    private final RecyclerFragment fragment;
     private List<EventPojo> pojoList;
 
-    public RecyclerViewAdapter(List<EventPojo> pojoList, Activity activity) {
+    public RecyclerViewAdapter(List<EventPojo> pojoList, RecyclerFragment fragment) {
         this.pojoList = pojoList;
-        this.activity = activity;
+        this.fragment = fragment;
     }
 
     @Override
@@ -47,7 +48,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.title.setText(eventPojo.getTitre_fr());
         holder.description.setText(eventPojo.getDescription_fr());
         holder.currentPojo = eventPojo;
-        holder.activity = activity;
+        holder.fragment = fragment;
         Picasso.with(holder.imageView.getContext()).load(eventPojo.getImage()).centerCrop().fit().into(holder.imageView);
 
     }
@@ -69,7 +70,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         protected ImageView imageView;
 
         protected EventPojo currentPojo;
-        private Activity activity;
+        private RecyclerFragment fragment;
 
         /**
          * Lors d'un clic sur un événement, chargemenet d'une description détaillée de celui-ci
@@ -80,25 +81,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
             itemView.setOnClickListener(v -> {
-                    FragmentManager fragmentManager = activity.getFragmentManager();
-                    DescriptionFragment descriptionFragment = new DescriptionFragment();
-                    descriptionFragment.setEventPojo(currentPojo);
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.eventlarge, descriptionFragment)
-                            .addToBackStack(null)
-                            .commit();
-                    fragmentManager.executePendingTransactions();
-                    descriptionFragment.update();
-
-
-
+                fragment.onClick(currentPojo);
             });
         }
-
-
     }
-
-
 
     public List<EventPojo> getPojoList() {
         return pojoList;
@@ -107,11 +93,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void setPojoList(List<EventPojo> pojoList) {
         this.pojoList = pojoList;
     }
-
-    private Activity getActivity(){
-        return activity;
-    }
-
-
 
 }

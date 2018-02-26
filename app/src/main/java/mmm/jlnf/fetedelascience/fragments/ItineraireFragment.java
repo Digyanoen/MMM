@@ -33,6 +33,9 @@ public class ItineraireFragment extends Fragment {
         return pojoList.add(eventPojo);
     }
 
+    public ItineraireFragment() {
+        this.pojoList = new ArrayList<>();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +47,6 @@ public class ItineraireFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recycleritinerairefragment, container, false);
         ButterKnife.bind(this, view);
-        pojoList = new ArrayList<>();
         ItineraireAdapter itineraireAdapter = new ItineraireAdapter(pojoList, this.getActivity());
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity().getApplication().getBaseContext());

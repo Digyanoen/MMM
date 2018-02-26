@@ -1,6 +1,7 @@
 package mmm.jlnf.fetedelascience.fragments;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,7 +31,7 @@ public class RecyclerFragment extends Fragment {
     @BindView(R.id.event) RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
     private List<EventPojo> eventsList = new ArrayList<>();
-    private RecyclerListener listener;
+    private EventRecyclerListener listener;
 
     public RecyclerFragment() {
         super();
@@ -43,11 +43,10 @@ public class RecyclerFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recyclerlistview, container, false);
         ButterKnife.bind(this, view);
-        recyclerViewAdapter = new RecyclerViewAdapter(eventsList, this.getActivity());
+        recyclerViewAdapter = new RecyclerViewAdapter(eventsList, this);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity().getApplication().getBaseContext());
 
@@ -67,12 +66,16 @@ public class RecyclerFragment extends Fragment {
         eventsList.addAll(list);
     }
 
-    public void setOnRecyclerListener(RecyclerListener recyclerListener){
+    public void setOnEventRecyclerListener(EventRecyclerListener recyclerListener){
         listener = recyclerListener;
     }
 
-    interface RecyclerListener{
-        void onRecyclerListener(HashMap<String, String> m);
+    public void onClick(EventPojo pojo) {
+        listener.onEventRecyclerListener(pojo);
+    }
+
+    public interface EventRecyclerListener{
+        void onEventRecyclerListener(EventPojo pojo);
     }
 
 }

@@ -88,34 +88,29 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.avis, notationRecyclerFragment);
         fragmentTransaction.commit();
+
         textView = new TextView(getActivity());
         spinner = new Spinner(getActivity());
         setHasOptionsMenu(true);
 
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        setItem();
 
+        // Si l'utilisateur est l'oganisateur, on rajoute un listener sur le spinner
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int remplissage = (int) parent.getItemAtPosition(position);
+                databaseReference.child(eventPojo.getIdentifiant()).child("Remplissage").setValue(remplissage);
+                databaseReference.push();
 
-            databaseReference = FirebaseDatabase.getInstance().getReference();
-            setItem();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-
-
-            // Si l'utilisateur est l'oganisateur, on rajoute un listener sur le spinner
-         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    int remplissage = (int) parent.getItemAtPosition(position);
-                    databaseReference.child(eventPojo.getIdentifiant()).child("Remplissage").setValue(remplissage);
-                    databaseReference.push();
-
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
-
+            }
+        });
 
         return view;
     }
@@ -128,9 +123,7 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
         date.setText(eventPojo.getDates().replace(';', ' '));
         notationRecyclerFragment.getNotationRecyclerAdapter().getCommentForEvent(eventPojo.getIdentifiant());
 
-
-
-        }
+    }
 
 
     /**
@@ -139,36 +132,36 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
      */
     @OnClick(R.id.addToCalendar)
     public void addToCalendar(){
-    if(ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.WRITE_CALENDAR)==PackageManager.PERMISSION_GRANTED)
+        if(ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.WRITE_CALENDAR)==PackageManager.PERMISSION_GRANTED)
 
-    {
-        ContentValues values = new ContentValues();
-        Calendar beginTime = Calendar.getInstance();
-        String[] dates = eventPojo.getDates().split(";");
-        for( String date : dates) {
-            String[] splitDate = date.split("-");
-            beginTime.set(Integer.parseInt(splitDate[0]), Integer.parseInt(splitDate[1])-1, Integer.parseInt(splitDate[2]));
-            Calendar endTime = Calendar.getInstance();
-            long start = beginTime.getTimeInMillis();
-            endTime.set(Integer.parseInt(splitDate[0]), Integer.parseInt(splitDate[1])-1, Integer.parseInt(splitDate[2])+1);
-            long end = endTime.getTimeInMillis();
-            Log.e("tag", "begin "+start+" end "+end);
-            values.put(CalendarContract.Events.DTSTART, start);
-            values.put(CalendarContract.Events.DTEND, end);
-            values.put(CalendarContract.Events.TITLE, eventPojo.getTitre_fr());
-            values.put(CalendarContract.Events.DESCRIPTION, eventPojo.getDescription_fr());
-            values.put(CalendarContract.Events.ALL_DAY, 1);
-            values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
-            values.put(CalendarContract.Events.CALENDAR_ID, 3);
-            Uri uri = this.getActivity().getContentResolver().insert(CalendarContract.Events.CONTENT_URI, values);
+        {
+            ContentValues values = new ContentValues();
+            Calendar beginTime = Calendar.getInstance();
+            String[] dates = eventPojo.getDates().split(";");
+            for( String date : dates) {
+                String[] splitDate = date.split("-");
+                beginTime.set(Integer.parseInt(splitDate[0]), Integer.parseInt(splitDate[1])-1, Integer.parseInt(splitDate[2]));
+                Calendar endTime = Calendar.getInstance();
+                long start = beginTime.getTimeInMillis();
+                endTime.set(Integer.parseInt(splitDate[0]), Integer.parseInt(splitDate[1])-1, Integer.parseInt(splitDate[2])+1);
+                long end = endTime.getTimeInMillis();
+                Log.e("tag", "begin "+start+" end "+end);
+                values.put(CalendarContract.Events.DTSTART, start);
+                values.put(CalendarContract.Events.DTEND, end);
+                values.put(CalendarContract.Events.TITLE, eventPojo.getTitre_fr());
+                values.put(CalendarContract.Events.DESCRIPTION, eventPojo.getDescription_fr());
+                values.put(CalendarContract.Events.ALL_DAY, 1);
+                values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
+                values.put(CalendarContract.Events.CALENDAR_ID, 3);
+                Uri uri = this.getActivity().getContentResolver().insert(CalendarContract.Events.CONTENT_URI, values);
+            }
+            Toast.makeText(this.getActivity(), "Evénement ajouté", Toast.LENGTH_SHORT).show();
+        } else
+
+        {
+            requestPermissions(new String[]{Manifest.permission.WRITE_CALENDAR}, 0);
         }
-        Toast.makeText(this.getActivity(), "Evénement ajouté", Toast.LENGTH_SHORT).show();
-    } else
-
-    {
-        requestPermissions(new String[]{Manifest.permission.WRITE_CALENDAR}, 0);
     }
-}
 
     @OnClick(R.id.notate)
     public void notate(){
@@ -187,10 +180,10 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         Log.e("request code", String.valueOf(requestCode));
         if (requestCode == 0 && (ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.WRITE_CALENDAR)==PackageManager.PERMISSION_GRANTED)) {
-                Log.e("tata", "toto");
-                addToCalendar();
-            }else {
-                Toast.makeText(this.getActivity(), "Vous avez refusé l'autorisation", Toast.LENGTH_SHORT).show();
+            Log.e("tata", "toto");
+            addToCalendar();
+        }else {
+            Toast.makeText(this.getActivity(), "Vous avez refusé l'autorisation", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -271,7 +264,6 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
     @OnClick(R.id.addToList)
     public void addToList(){
         itineraireListener.onAddItineraire(eventPojo);
-
     }
 
     public void setItineraireListener(ItineraireListener i){
