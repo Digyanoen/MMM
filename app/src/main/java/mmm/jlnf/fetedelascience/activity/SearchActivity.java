@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,6 +64,11 @@ public class SearchActivity extends AppCompatActivity{
         switch (item.getItemId()) {
             case R.id.orga:
                 MapsActivity.isOrganisteur = !MapsActivity.isOrganisteur;
+                if(MapsActivity.isOrganisteur){
+                    Toast.makeText(this, "Vous êtes organisateur", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(this, "Vous n'êtes plus l'organisateur", Toast.LENGTH_LONG).show();
+                }
                 return true;
             case R.id.mapActivity:
                 i.setClass(this, MapsActivity.class);
