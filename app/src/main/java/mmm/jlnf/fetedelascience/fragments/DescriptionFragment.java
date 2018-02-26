@@ -195,6 +195,7 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.e("heho", "heoh");
         switch (item.getItemId()) {
             case R.id.orga:
                 SearchActivity.isOrganisteur = !SearchActivity.isOrganisteur;

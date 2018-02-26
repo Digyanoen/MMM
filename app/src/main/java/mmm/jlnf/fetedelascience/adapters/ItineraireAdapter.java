@@ -11,6 +11,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mmm.jlnf.fetedelascience.R;
 import mmm.jlnf.fetedelascience.pojos.EventPojo;
 
@@ -37,6 +38,7 @@ public class ItineraireAdapter extends RecyclerView.Adapter<ItineraireAdapter.It
     public void onBindViewHolder(ItineraireHolder holder, int position) {
         EventPojo eventPojo = pojoList.get(position);
         holder.textView.setText(eventPojo.getTitre_fr());
+        holder.currentEvent = eventPojo;
 
     }
 
@@ -50,9 +52,17 @@ public class ItineraireAdapter extends RecyclerView.Adapter<ItineraireAdapter.It
         @BindView(R.id.itineraire)
         TextView textView;
 
+        EventPojo currentEvent;
+
         public ItineraireHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        @OnClick(R.id.delete)
+        public void delete(){
+            pojoList.remove(currentEvent);
+            ItineraireAdapter.this.notifyDataSetChanged();
         }
 
     }

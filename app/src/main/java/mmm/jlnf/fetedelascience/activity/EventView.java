@@ -93,6 +93,7 @@ public class EventView extends AppCompatActivity implements DescriptionFragment.
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.e("coucou", "eventView");
         Intent i = getIntent();
         switch (item.getItemId()) {
             case R.id.rechercheActivity:

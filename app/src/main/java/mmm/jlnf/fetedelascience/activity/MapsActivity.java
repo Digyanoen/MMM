@@ -27,7 +27,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private List<Marker> markers;
     private DBManager dbManager;
-    private List<EventPojo> itinéraire;
+    private List<EventPojo> itineraire;
     private LatLng center;
 
     @Override
@@ -43,8 +43,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onStart() {
         super.onStart();
-        itinéraire = (List<EventPojo>) getIntent().getSerializableExtra("itis");
-        if(itinéraire == null) itinéraire = new ArrayList<>();
+        itineraire = (List<EventPojo>) getIntent().getSerializableExtra("itis");
+        if(itineraire == null) itineraire = new ArrayList<>();
         double latitude = getIntent().getDoubleExtra("latitude",48.8534);
         double longitude = getIntent().getDoubleExtra("longitude",2.3488);
         center = new LatLng(latitude,longitude);
@@ -73,9 +73,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        if(itinéraire.size() >2){
+        if(itineraire.size() >2){
             ItineraireTask it = new ItineraireTask(this, mMap);
-            it.setPassages(itinéraire);
+            it.setPassages(itineraire);
             it.execute();
         }
         mMap.setOnCameraIdleListener(() -> {
