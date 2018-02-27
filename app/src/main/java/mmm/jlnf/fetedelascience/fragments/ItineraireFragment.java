@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,6 +25,7 @@ import mmm.jlnf.fetedelascience.activity.MapsActivity;
 import mmm.jlnf.fetedelascience.activity.SearchActivity;
 import mmm.jlnf.fetedelascience.adapters.ItineraireAdapter;
 import mmm.jlnf.fetedelascience.pojos.EventPojo;
+import mmm.jlnf.fetedelascience.singleton.Itineraire;
 
 /**
  * Created by nicolas on 26/02/18.
@@ -46,11 +48,6 @@ public class ItineraireFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recycleritinerairefragment, container, false);
@@ -70,7 +67,7 @@ public class ItineraireFragment extends Fragment {
     @OnClick(R.id.mapItineraire)
     public void onClick() {
         Log.e("toto", "toto");
-        if(pojoList.size() >= 2) {
+        if (pojoList.size() >= 2) {
             Log.e("tata", "tata");
             Intent i = getActivity().getIntent();
             i.setClass(getActivity(), MapsActivity.class);
@@ -78,13 +75,18 @@ public class ItineraireFragment extends Fragment {
             i.putExtra("latitude", pojoList.get(0).getLat());
             i.putExtra("longitude", pojoList.get(0).getLng());
             startActivity(i);
-        }
-        else{
+        } else {
             Toast.makeText(getActivity(), "Pas d'itinéraire", Toast.LENGTH_SHORT).show();
         }
-
     }
 
+    @OnClick(R.id.save)
+    public void onSave(){
+        Itineraire.getInstance().setPojoList(pojoList);
+    }
 
-
+    @OnClick(R.id.load)
+    public void onLoad(){
+        pojoList = Itineraire.getInstance().getPojoList();
+    }
 }
