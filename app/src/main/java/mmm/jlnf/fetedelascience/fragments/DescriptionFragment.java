@@ -116,7 +116,7 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
     }
 
 
-    public void update() {
+    private void update() {
         title.setText(eventPojo.getTitre_fr());
         desc.setText(eventPojo.getDescription_fr());
         ville.setText(eventPojo.getVille());
@@ -223,6 +223,7 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
         }
     }
     public void setItem(){
+        Log.e("identifiant", eventPojo.getIdentifiant());
         databaseReference.child(eventPojo.getIdentifiant()).child("Remplissage").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -253,6 +254,7 @@ public class DescriptionFragment extends Fragment implements ActivityCompat.OnRe
                         textView.setText("0");
                     }
                 }
+                update();
             }
 
             @Override

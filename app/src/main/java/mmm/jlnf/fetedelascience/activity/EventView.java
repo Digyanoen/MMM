@@ -66,17 +66,17 @@ public class EventView extends AppCompatActivity implements DescriptionFragment.
             EventPojo pojo = dbmanager.getPojoByID(eventID);
             if(pojo != null){
                 descriptionFragment.setEventPojo(pojo);
-                fragmentTransaction.add(R.id.eventlarge,descriptionFragment).commit();
+                fragmentTransaction.replace(R.id.eventlarge,descriptionFragment)
+                        .addToBackStack(null)
+                        .commit();
                 fragmentManager.executePendingTransactions();
-                descriptionFragment.update();
             }else{
                 Toast.makeText(getApplicationContext(),"Cet événement n'existe pas !",Toast.LENGTH_LONG).show();
                 eventID = -1;
             }
         }
-
-        if(eventID == -1){
-            fragmentTransaction.add(R.id.eventlarge, recycler);
+            else{
+            fragmentTransaction.replace(R.id.eventlarge, recycler);
 
             SearchAsyncHandler asyncHandler = new SearchAsyncHandler(progressBar);
 
@@ -138,7 +138,6 @@ public class EventView extends AppCompatActivity implements DescriptionFragment.
                 .addToBackStack(null)
                 .commit();
         fragmentManager.executePendingTransactions();
-        descriptionFragment.update();
     }
 
 }
