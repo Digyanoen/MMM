@@ -23,7 +23,6 @@ public class ItineraireAdapter extends RecyclerView.Adapter<ItineraireAdapter.It
 
     private List<EventPojo> pojoList;
     public ItineraireAdapter(List<EventPojo> pojoList) {
-
         this.pojoList = pojoList;
     }
 
@@ -65,5 +64,13 @@ public class ItineraireAdapter extends RecyclerView.Adapter<ItineraireAdapter.It
             ItineraireAdapter.this.notifyDataSetChanged();
         }
 
+    }
+
+    public List<EventPojo> getPojoList() {
+        return pojoList;
+    }
+
+    public void setPojoList(List<EventPojo> pojoList) {
+        this.pojoList = pojoList;
     }
 }

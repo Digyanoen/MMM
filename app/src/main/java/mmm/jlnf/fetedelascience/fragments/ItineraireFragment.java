@@ -88,5 +88,7 @@ public class ItineraireFragment extends Fragment {
     @OnClick(R.id.load)
     public void onLoad(){
         pojoList = Itineraire.getInstance().getPojoList();
+        ((ItineraireAdapter)recyclerView.getAdapter()).setPojoList(pojoList);
+        recyclerView.getAdapter().notifyDataSetChanged();
     }
 }
