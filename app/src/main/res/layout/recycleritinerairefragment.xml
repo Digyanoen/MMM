@@ -19,11 +19,13 @@
         android:id="@+id/mapItineraire"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:layout_marginBottom="172dp"
-        android:layout_marginStart="84dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Itinéraire sur la map"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itineraireRecycler" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/itineraireRecycler"
